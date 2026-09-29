@@ -30,12 +30,16 @@ export default function Chat({ messages, setMessages, profile, onUpdate, onUndo,
   useEffect(() => { list.current?.scrollTo({ top: list.current.scrollHeight }); }, [messages, busy]);
 
   // Streamed text goes into the last assistant bubble; an update closes it so later text starts a new one.
-  const appendText = (delta: string, fresh: { v: boolean; closedTrace: boolean }) => setMessages(ms => {
-    const last = ms[ms.length - 1];
-    if (!fresh.v && last?.role === "assistant") return [...ms.slice(0, -1), { role: "assistant", text: last.text + delta }];
+  // Decide "new bubble or append" when the event arrives, not inside the state updater, which React may run later.
+  const appendText = (delta: string, fresh: { v: boolean; closedTrace: boolean }) => {
+    const startNew = fresh.v;
     fresh.v = false;
-    return [...ms, { role: "assistant", text: delta.trimStart() }];
-  });
+    setMessages(ms => {
+      const last = ms[ms.length - 1];
+      if (!startNew && last?.role === "assistant") return [...ms.slice(0, -1), { role: "assistant", text: last.text + delta }];
+      return [...ms, { role: "assistant", text: delta.trimStart() }];
+    });
+  };
 
   async function send() {
     const text = input.trim();
@@ -62,16 +66,17 @@ export default function Chat({ messages, setMessages, profile, onUpdate, onUndo,
           if (e.type === "text") appendText(e.delta, fresh);
           else if (e.type === "mode") setMode(e.mode);
           else if (e.type === "status") {
+            // Steps build up in one trace until text or a plan update closes it (decided now, not in the updater).
+            const forceNew = fresh.closedTrace;
+            fresh.closedTrace = false;
             setMessages(ms => {
               const last = ms[ms.length - 1];
               const step: TraceStep = { id: e.id, label: e.label, detail: e.detail, state: e.state };
-              // Steps from one turn build up in a single trace until text or a plan update closes it.
-              if (last?.role === "trace" && !fresh.closedTrace) {
+              if (last?.role === "trace" && !forceNew) {
                 const i = last.steps.findIndex(s => s.id === e.id);
                 const steps = i >= 0 ? last.steps.map((s, k) => (k === i ? step : s)) : [...last.steps, step];
                 return [...ms.slice(0, -1), { role: "trace", steps }];
               }
-              fresh.closedTrace = false;
               return [...ms, { role: "trace", steps: [step] }];
             });
           }

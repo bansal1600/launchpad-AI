@@ -2,6 +2,8 @@
 
 **Comply Cofounder: know before you sign the lease.**
 
+▶ **[Watch the 2-minute demo (demo.mp4)](demo.mp4)**
+
 A planner for people opening a physical business (café, restaurant or retail boutique) in Santa Clara County, California. The owner enters a business type and an address; everything else comes from a conversation. The app returns:
 
 - **Who regulates the address**: city, unincorporated county, or out of area (US Census geocoder)
@@ -84,3 +86,7 @@ Every step in the roadmap already knows what the owner needs next: plans drawn, 
 - Places, transit, parking and competitors: © OpenStreetMap contributors.
 
 This is guidance based on public sources, not legal advice. Confirm with the issuing agency before acting.
+
+## Built with
+
+This project was built with the help of AI coding assistants: **AdaL** and **Claude** (Anthropic), working alongside the team on research, code and design.

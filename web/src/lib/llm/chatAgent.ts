@@ -7,6 +7,7 @@ import { buildPlan } from "@/lib/engine/buildPlan";
 import { diffPlans, humanSummary, placeName } from "@/lib/engine/diff";
 import { geocode } from "@/lib/services/geocode";
 import { FIELD_LABELS, VALUE_LABELS } from "@/lib/defaults";
+import { fmtDate } from "@/lib/dates";
 
 const MODEL = process.env.ANTHROPIC_MODEL || "claude-opus-5-5";
 
@@ -110,7 +111,7 @@ const pause = (ms: number) => new Promise(r => setTimeout(r, ms));
 /** Describe a patch in plain words, e.g. "Alcohol: Beer & wine · Size: 1,500 sq ft". */
 function describePatch(patch: ProfilePatch) {
   return Object.entries(patch).map(([k, v]) => {
-    const val = k === "address" ? (v as { raw: string }).raw : VALUE_LABELS[k]?.[String(v)] ?? (typeof v === "boolean" ? (v ? "yes" : "no") : k.endsWith("Usd") ? `$${Number(v).toLocaleString()}` : k === "squareFeet" ? `${Number(v).toLocaleString()} sq ft` : String(v));
+    const val = k === "address" ? (v as { raw: string }).raw : VALUE_LABELS[k]?.[String(v)] ?? (typeof v === "boolean" ? (v ? "yes" : "no") : k.endsWith("Usd") ? `$${Number(v).toLocaleString()}` : k === "squareFeet" ? `${Number(v).toLocaleString()} sq ft` : k === "targetOpenDate" ? fmtDate(String(v)) : String(v));
     return `${FIELD_LABELS[k] ?? k}: ${val}`;
   }).join(" · ");
 }
