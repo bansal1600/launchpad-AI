@@ -29,7 +29,7 @@ from flwr.app import Context
 from openai import OpenAI
 
 from agent.planning import check_sources, clean_step, extract_json, format_plan, merge_steps, schedule
-from agent.rules import fallback_steps
+from agent.rules import enrich, fallback_steps, is_relevant, missing_essentials
 
 DEFAULT_MODEL = "openai/gpt-5.6-sol"
 MAX_TOOL_ITERATIONS = 5
@@ -37,6 +37,10 @@ APPROVAL_LINE = "Reply APPROVE to confirm, or tell me what to change."
 EVENT_PLAN = "comply.plan"
 EVENT_APPROVED = "comply.approved"
 EVENT_STATUS = "comply.status"
+# Event types Flower Chat renders: answer text, the collapsible "Reasoning" block, and run completion.
+CHAT_TEXT = "response.output_text.delta"
+CHAT_PROGRESS = "response.reasoning_summary_text.delta"
+CHAT_DONE = "response.completed"
 
 # Logs carry only counts and role names, never the owner's message, address or plan.
 log = logging.getLogger("comply_cofounder")
@@ -67,17 +71,19 @@ Return ONLY JSON: {"kind": "city" | "unincorporated" | "out_of_area", "city": st
 "out_of_area" means the county is not Santa Clara County. If the lookup fails, return {"kind": "unknown"}."""
 
 REVIEWER_PROMPT = """You are the Reviewer agent. A human (the owner or a permit expert) is correcting steps in a permit plan.
-You get the plan's steps (with their order numbers) and the human's message. Return ONLY JSON:
+You get the plan's steps (with their order numbers) and the human's message, which may name a step by number or by name. Return ONLY JSON:
 {"edits": [{"order": number, "name"?: string, "agency"?: string, "fee_usd"?: number, "duration_days"?: number, "source_url"?: string, "remove"?: true}]}
 Change only what the human said. If the message is not a step correction, return {"edits": []}."""
 
 AGENCY_PROMPT = """You are the {role} agent for Comply Cofounder. Find the permits, licenses and registrations that a {kind} opening in {city}, {county}, California needs from {scope}.
 Business facts: food={food}; alcohol={alcohol}; space={acquisition}; employees={employees}; exterior sign={sign}.
-Use web_search to find official pages and web_fetch to read them. Prefer official government sites (.gov). Do not use more than a few searches.
+Use web_search to find official pages and web_fetch to read them. If web_search is unavailable or returns an error, use web_fetch directly on these official starting pages: {seeds}
+Prefer official government sites (.gov). Use at most 4 tool calls.
 Return ONLY JSON: {{"steps": [{{"id": short_snake_case, "name": plain-language step name, "agency": issuing agency,
-"fee_usd": number (typical, 0 if free), "duration_days": number (typical), "depends_on": [ids of steps that must finish first],
+"fee_usd": number (0 if the page says it's free, null if the page doesn't say), "duration_days": number of days for approval or processing (null if the page doesn't say), "depends_on": [ids of steps that must finish first],
 "source_url": the official page you used, "gates_opening": false only if it can finish after opening day, "notes": one short sentence}}]}}
-Include only steps from {scope}. If you cannot confirm something, leave it out rather than guess."""
+Include only steps from {scope} that apply to these business facts (for example, no alcohol license steps if alcohol=none; no change-of-ownership steps unless space=change_of_ownership).
+If you cannot confirm something, leave it out rather than guess, and never invent fees or durations: use null."""
 
 PLANNER_PROMPT = """You are the Planner agent. You get permit steps from city, county and state agents for one new business.
 Fix the dependencies so the order is realistic (for example: zoning before building permit; County health plan approval before the building permit for food businesses; construction before final inspection; final inspection before the health permit; EIN before seller's permit and payroll registration).
@@ -87,6 +93,15 @@ REMINDER_PROMPT = """You set up deadline reminders for an approved business laun
 Call start_automation once per reminder, at most 3 reminders, for the next key deadlines in the plan (steps marked critical first).
 Each reminder input must be a short instruction like "Remind the owner: submit the County food facility plan check this week (step 3)". Use ISO 8601 start_at times in UTC, 9:00 AM on the day a week before each step starts (or tomorrow if that has passed).
 Do not include the owner's address or any personal details in the reminder input. After scheduling, reply with one short confirmation listing the dates."""
+
+SEEDS = {
+    "city": ["https://www.sanjoseca.gov/businesses/development-services-permit-center/start-your-project/commercial-industrial-properties/restaurants-or-food-beverage-service",
+             "https://www.sanjoseca.gov/your-government/departments-offices/finance/business-tax-registration/business-tax-rates"],
+    "county": ["https://deh.santaclaracounty.gov/food-and-retail/compliance-retail-food-operations/submit-plan-review-restaurants-grocery-stores-and",
+               "https://deh.santaclaracounty.gov/food-and-retail/compliance-retail-food-operations/restaurant-grocery-store-or-other-fixed-food"],
+    "state": ["https://cdtfa.ca.gov/taxes-and-fees/faqseller.htm", "https://edd.ca.gov/en/payroll_taxes/am_i_required_to_register_as_an_employer",
+              "https://www.abc.ca.gov/licensing/license-fees/application-fee-schedules/"],
+}
 
 AGENCIES = [
     ("City", "city", "the city (or the County, if the address is in unincorporated land): business license or tax registration, zoning, building, fire, sign and sidewalk permits"),
@@ -98,8 +113,17 @@ AGENCIES = [
 
 
 def _status(agent: AgentSession, role: str, state: str, detail: str = "") -> None:
-    """Frontend-visible progress (no personal data)."""
+    """Frontend-visible progress (no personal data), shown in Flower Chat's Reasoning block."""
     agent.events.emit({"type": EVENT_STATUS, "role": role, "state": state, "detail": detail})
+    icon = {"running": "…", "done": "✓", "tool": "  ↳"}.get(state, "•")
+    line = f"{icon} {role}: using {detail}" if state == "tool" else f"{icon} {role}" + (f": {detail}" if detail else " working")
+    agent.events.emit({"type": CHAT_PROGRESS, "delta": line + "\n"})
+
+
+def say(agent: AgentSession, text: str) -> None:
+    """Send answer text to the chat (and stdout for logs-free local runs)."""
+    agent.events.emit({"type": CHAT_TEXT, "delta": text})
+    print(text)
 
 
 def _item_dict(item: Any) -> dict[str, Any]:
@@ -142,7 +166,14 @@ def run_role(
                 items.append({"type": "function_call_output", "call_id": call.call_id, "output": json.dumps({"error": "Arguments were not valid JSON."})})
                 continue
             _status(agent, role, "tool", call.name)
-            items.append(agent.connectors.call({"name": call.name, "arguments": call.arguments, "call_id": call.call_id}))
+            try:
+                items.append(agent.connectors.call({"name": call.name, "arguments": call.arguments, "call_id": call.call_id}))
+            except Exception as err:  # pylint: disable=broad-exception-caught
+                # A failed connector (network, provider not configured) must not end the run:
+                # tell the model, which can try another source or answer from what it has.
+                log.warning("%s: connector %s failed", role, call.name)
+                items.append({"type": "function_call_output", "call_id": call.call_id,
+                              "output": json.dumps({"error": f"{call.name} failed: {str(err)[:200]}"})})
     log.warning("%s hit the tool iteration cap", role)
     return ""
 
@@ -181,7 +212,7 @@ def _agency_steps(agent: AgentSession, client: OpenAI, model: str, profile: dict
         # Only city/county-level facts go to web search, never the street address.
         prompt = AGENCY_PROMPT.format(
             role=role, kind=kind, city=profile.get("city", "San José"), county=profile.get("county", "Santa Clara County"),
-            scope=scope, food=profile.get("food_service"), alcohol=profile.get("alcohol"), acquisition=profile.get("acquisition"),
+            scope=scope, seeds=", ".join(SEEDS[level]), food=profile.get("food_service"), alcohol=profile.get("alcohol"), acquisition=profile.get("acquisition"),
             employees=profile.get("employees"), sign=profile.get("exterior_sign"))
         steps: list[dict[str, Any]] = []
         try:
@@ -207,6 +238,14 @@ def _covered_by_rules(profile: dict[str, Any]) -> bool:
 
 def _plan(agent: AgentSession, client: OpenAI, model: str, profile: dict[str, Any]) -> dict[str, Any]:
     steps = merge_steps(_agency_steps(agent, client, model, profile))
+    # Guardrails on agent output: drop steps that contradict the owner's facts, fill unknown
+    # fees and times from the built-in rules (flagged as estimates), and add core steps an agent missed.
+    dropped = [s for s in steps if not is_relevant(s, profile)]
+    steps = [enrich(s) for s in steps if is_relevant(s, profile)]
+    if _covered_by_rules(profile):
+        added = [clean_step(r, r["level"]) | {"added_from_rules": True} for r in missing_essentials(steps, profile)]
+        steps = merge_steps([steps, [a for a in added if a]])  # the Planner then wires their dependencies
+    _status(agent, "Guardrails", "done", f"removed {len(dropped)} step(s) that don't apply; filled unstated fees and times from rules")
     # Construction time is the owner's work, not a permit, but inspections wait on it.
     if not any(s["level"] == "work" for s in steps) and profile.get("acquisition") != "change_of_ownership":
         builds = [s for s in steps if "building permit" in s["name"].lower()]
@@ -256,6 +295,7 @@ def _apply_review(agent: AgentSession, client: OpenAI, model: str, plan: dict[st
         for k in ("fee_usd", "duration_days"):
             if isinstance(e.get(k), (int, float)) and e[k] >= 0:
                 s[k] = round(e[k]) if k == "fee_usd" else max(1, round(e[k]))
+                s["estimated"] = False  # a number a person supplied is no longer an estimate
         s["reviewed_by_human"] = True
     kept = [s for s in steps if s["order"] not in removed]
     new_plan = schedule(kept, date.today())
@@ -280,7 +320,17 @@ def _reminders(agent: AgentSession, client: OpenAI, model: str, plan: dict[str, 
 @app.main()
 def main(agent: AgentSession, context: Context) -> None:
     """Comply Cofounder: plan, wait for approval, then offer reminders."""
-    model = str(context.run_config.get("model", DEFAULT_MODEL)) if context.run_config else DEFAULT_MODEL
+    try:
+        _main(agent, context)
+    except Exception as err:  # pylint: disable=broad-exception-caught
+        log.warning("run failed: %s", type(err).__name__)
+        agent.events.emit({"type": "error", "message": f"Comply Cofounder hit an error ({type(err).__name__}). Please try again."})
+        raise
+    agent.events.emit({"type": CHAT_DONE})
+
+
+def _main(agent: AgentSession, context: Context) -> None:
+    model = os.environ.get("COMPLY_MODEL") or (str(context.run_config.get("model", DEFAULT_MODEL)) if context.run_config else DEFAULT_MODEL)
     client = OpenAI(base_url=os.environ["FLWR_RUNTIME_BASE_URL"], api_key=os.environ["FLWR_RUNTIME_API_KEY"], max_retries=0)
     text = (agent.prompt or "").strip()
     history = load_history(agent)
@@ -288,27 +338,27 @@ def main(agent: AgentSession, context: Context) -> None:
     # 1) Approval of the plan shown last turn.
     if history["plan"] and not history["approved"] and is_approve(text):
         agent.events.emit({"type": EVENT_APPROVED, "open_date": history["plan"]["open_date"]})
-        print(f"✅ Plan approved. Target opening: {history['plan']['open_date']}.\n\n"
+        say(agent, f"✅ Plan approved. Target opening: {history['plan']['open_date']}.\n\n"
               "Want deadline reminders for the key steps? Reply \"remind me\" and I'll schedule them.")
         return
 
     # 2) Reminders, only after approval.
     if wants_reminders(text):
         if not history["approved"]:
-            print("I can set reminders once you've approved a plan. " + (APPROVAL_LINE if history["plan"] else "Tell me what you're opening and where to start."))
+            say(agent, "I can set reminders once you've approved a plan. " + (APPROVAL_LINE if history["plan"] else "Tell me what you're opening and where to start."))
             return
         _status(agent, "Reminders", "running")
-        print(_reminders(agent, client, model, history["plan"]) or "I couldn't schedule reminders right now. Try again in a moment.")
+        say(agent, _reminders(agent, client, model, history["plan"]) or "I couldn't schedule reminders right now. Try again in a moment.")
         _status(agent, "Reminders", "done")
         return
 
     # 3) A human correcting a flagged step in the plan shown last turn.
-    if history["plan"] and not history["approved"] and re.search(r"\bsteps?\s*#?\d+", text, re.I):
+    if history["plan"] and not history["approved"] and re.search(r"\bsteps?\s*#?\d+|^\s*(fix|correct|update)\b", text, re.I):
         _status(agent, "Reviewer agent", "running")
         plan = _apply_review(agent, client, model, history["plan"], text)
         _status(agent, "Reviewer agent", "done", "correction applied")
         agent.events.emit({"type": EVENT_PLAN, "status": "awaiting_approval", "profile": history["profile"], "plan": plan})
-        print(format_plan(history["profile"] or {}, plan) + "\n\n" + APPROVAL_LINE)
+        say(agent, format_plan(history["profile"] or {}, plan) + "\n\n" + APPROVAL_LINE)
         return
 
     # 4) New plan or a change to the last one.
@@ -318,7 +368,7 @@ def main(agent: AgentSession, context: Context) -> None:
     if not isinstance(profile, dict) or profile.get("question") or not profile.get("business_type"):
         question = (profile.get("question") if isinstance(profile, dict) else None) or "What are you opening (café, restaurant or boutique), and at what address?"
         _status(agent, "Intake agent", "done", "needs one answer")
-        print(question)
+        say(agent, question)
         return
     _status(agent, "Intake agent", "done", f"{profile.get('business_type')} profile ready")
 
@@ -334,4 +384,4 @@ def main(agent: AgentSession, context: Context) -> None:
 
     plan = _plan(agent, client, model, profile)
     agent.events.emit({"type": EVENT_PLAN, "status": "awaiting_approval", "profile": profile, "plan": plan})
-    print(format_plan(profile, plan) + "\n\n" + APPROVAL_LINE)
+    say(agent, format_plan(profile, plan) + "\n\n" + APPROVAL_LINE)

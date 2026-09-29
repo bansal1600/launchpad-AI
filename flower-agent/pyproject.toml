@@ -11,7 +11,8 @@ requires-python = ">=3.11,<4.0"
 dependencies = ["flwr>=1.38.0,<2.0", "openai>=2.16.0,<3.0.0"]
 
 [dependency-groups]
-dev = ["pytest>=8"]
+# trafilatura powers the web_fetch connector on a local SuperLink (SuperGrid provides its own)
+dev = ["pytest>=8", "trafilatura>=2.1.0,<3.0.0"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["agent"]

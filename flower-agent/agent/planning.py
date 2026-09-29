@@ -42,19 +42,21 @@ def clean_step(raw: Any, level: str) -> Step | None:
     if not isinstance(raw, dict) or not str(raw.get("name", "")).strip():
         return None
 
-    def num(v: Any, default: float) -> float:
+    def num(v: Any) -> float | None:
         try:
             return max(0.0, float(v))
         except (TypeError, ValueError):
-            return default
+            return None
+
+    fee, days = num(raw.get("fee_usd")), num(raw.get("duration_days"))
 
     return {
         "id": slug(str(raw.get("id") or raw["name"])),
         "level": level,
         "name": str(raw["name"]).strip()[:120],
         "agency": str(raw.get("agency", "")).strip()[:120],
-        "fee_usd": round(num(raw.get("fee_usd"), 0)),
-        "duration_days": max(1, round(num(raw.get("duration_days"), 7))),
+        "fee_usd": None if fee is None else round(fee),  # None = the source didn't say; rules fill it in
+        "duration_days": None if days is None else max(1, round(days)),
         "depends_on": [slug(str(d)) for d in raw.get("depends_on", []) if str(d).strip()],
         "source_url": str(raw.get("source_url", "")).strip(),
         "gates_opening": raw.get("gates_opening", True) is not False,
@@ -98,6 +100,11 @@ def merge_steps(groups: list[list[Step]]) -> list[Step]:
 def schedule(steps: list[Step], start: date | None = None) -> dict[str, Any]:
     """Order by dependency, compute start/end days, critical path, opening date and cost."""
     start = start or date.today()
+    for s in steps:  # anything still unknown gets a cautious default, flagged as an estimate
+        if s.get("duration_days") is None:
+            s["duration_days"], s["estimated"] = 7, True
+        if s.get("fee_usd") is None:
+            s["fee_usd"], s["estimated"] = 0, True
     by_id = {s["id"]: s for s in steps}
     for s in steps:  # keep only dependencies that exist, and never on itself
         s["depends_on"] = [d for d in s.get("depends_on", []) if d in by_id and d != s["id"]]
@@ -168,10 +175,12 @@ def format_plan(profile: dict[str, Any], plan: dict[str, Any]) -> str:
             status += " · ✎ corrected by reviewer"
         lines.append(
             f"| {s['order']} | {flag}{s['name']} | {s['agency'] or s['level'].title()} | {s['start_date']} | "
-            f"{s['duration_days']} d | ${int(s['fee_usd']):,} | {src}{status} |"
+            f"{'~' if s.get('estimated') else ''}{s['duration_days']} d | {'~' if s.get('estimated') else ''}${int(s['fee_usd']):,} | {src}{status} |"
         )
     unverified = [s["name"] for s in plan["steps"] if s["status"] == "Needs verification"]
     if unverified:
         lines += ["", f"**Needs verification** (no official .gov source found): {', '.join(unverified)}."]
+    if any(s.get("estimated") for s in plan["steps"]):
+        lines += ["", "~ = the official page didn't state it; estimate from Comply Cofounder's built-in rules."]
     lines += ["", "_Guidance based on public sources, not legal advice. Confirm with each agency._"]
     return "\n".join(lines)

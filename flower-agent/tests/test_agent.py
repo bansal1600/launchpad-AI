@@ -103,6 +103,11 @@ def test_full_flow_plan_then_approve_then_reminders(run, capsys):
     for role in ["Intake agent", "Jurisdiction agent", "City agent", "County Health agent", "State agent", "Planner agent"]:
         assert role in roles
     assert out.strip().endswith(agent_app.APPROVAL_LINE)
+    # Flower Chat sees the plan text, the agents' progress, and a completion event.
+    types = [e["type"] for e in s1.emitted]
+    assert agent_app.CHAT_TEXT in types and agent_app.CHAT_PROGRESS in types and types[-1] == agent_app.CHAT_DONE
+    progress = "".join(e["delta"] for e in s1.emitted if e["type"] == agent_app.CHAT_PROGRESS)
+    assert "✓ City agent" in progress and "↳ City agent: using web_search" in progress
     assert "Needs verification" in out  # sjeconomy.com is not a .gov source
     plan_events = [e for e in s1.emitted if e["type"] == agent_app.EVENT_PLAN]
     assert plan_events and plan_events[0]["status"] == "awaiting_approval"
@@ -134,6 +139,7 @@ def test_human_fixes_a_flagged_step(run, capsys):
     new = next(e for e in s2.emitted if e["type"] == agent_app.EVENT_PLAN)["plan"]
     fixed = next(s for s in new["steps"] if s["id"] == "building_permit")
     assert fixed["fee_usd"] == 5500 and fixed["status"] == "Official source" and fixed["reviewed_by_human"]
+    assert not fixed.get("estimated")
 
 
 def test_intake_asks_one_question_when_unclear(run, capsys, monkeypatch):
@@ -169,7 +175,7 @@ def test_tool_loop_is_capped():
 def test_no_personal_data_in_logs_or_status(run, caplog):
     with caplog.at_level("DEBUG", logger="comply_cofounder"):
         session, _ = run("Café at 87 N San Pedro St, San Jose")
-    statuses = json.dumps([e for e in session.emitted if e["type"] == agent_app.EVENT_STATUS])
+    statuses = json.dumps([e for e in session.emitted if e["type"] in (agent_app.EVENT_STATUS, agent_app.CHAT_PROGRESS)])
     assert "San Pedro" not in statuses and "San Pedro" not in caplog.text
 
 
@@ -189,3 +195,27 @@ def test_fallback_rules_and_schedule():
     assert not by["sj_sign_permit"]["critical"]  # signs never set the opening date
     assert by["sj_building_permit"]["status"] == "Needs verification"  # sjeconomy.com is not .gov
     assert by["deh_plan_check"]["status"] == "Official source"
+
+
+def test_failed_connector_does_not_end_the_run():
+    session = FakeSession("x")
+    session.connectors.call = lambda call: (_ for _ in ()).throw(RuntimeError("provider down"))
+    replies = iter([tool_reply("web_fetch", {"url": "https://example.gov"}), text_reply('{"steps": []}')])
+    out = agent_app.run_role(session, SimpleNamespace(responses=SimpleNamespace(create=lambda **kw: next(replies))), "m", "City agent", "find", "go", ["web_fetch"])
+    assert out == '{"steps": []}'
+
+
+def test_guardrails_fill_unknowns_and_drop_irrelevant_steps():
+    from agent.planning import clean_step
+    from agent.rules import enrich, is_relevant, missing_essentials
+    profile = {"business_type": "cafe", "food_service": "prepared_food", "alcohol": "none", "acquisition": "second_generation"}
+    plan_check = enrich(clean_step({"name": "Food facility plan check", "duration_days": None, "fee_usd": 0}, "county"))
+    assert plan_check["duration_days"] == 42 and plan_check["fee_usd"] == 2400 and plan_check["estimated"]
+    stated = enrich(clean_step({"name": "Seller's permit", "duration_days": 3, "fee_usd": 0}, "state"))
+    assert stated["duration_days"] == 3 and not stated.get("estimated")  # agency value kept when plausible
+    assert not is_relevant(clean_step({"name": "Determine ABC alcoholic beverage license need"}, "state"), profile)
+    assert not is_relevant(clean_step({"name": "Change of Ownership Application"}, "county"), profile)
+    assert is_relevant(clean_step({"name": "Fire life-safety inspection"}, "city"), profile)
+    missing = {r["id"] for r in missing_essentials([clean_step({"name": "Zoning check"}, "city")], profile)}
+    assert {"deh_plan_check", "sj_building_permit", "deh_permit_to_operate"} <= missing
+    assert "abc_type41" not in missing and "deh_change_of_ownership" not in missing

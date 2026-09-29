@@ -111,3 +111,66 @@ def fallback_steps(profile: dict[str, Any], level: str | None = None) -> list[Ru
         if all(flags.get(k) == v for k, v in rule["when"].items()):
             out.append({k: v for k, v in rule.items() if k != "when"})
     return out
+
+
+# How to recognise an agency agent's step as one of the known rules.
+MATCH: dict[str, str] = {
+    "sj_zoning_check": r"zoning",
+    "sj_business_tax_certificate": r"business tax|tax certificate|business license",
+    "sj_building_permit": r"building permit|tenant improvement",
+    "sj_sign_permit": r"\bsign",
+    "sj_final_inspection": r"final (building )?inspection|occupancy",
+    "deh_plan_check": r"plan check|plan review",
+    "deh_change_of_ownership": r"change of ownership|facility evaluation",
+    "deh_permit_to_operate": r"health permit|permit to operate",
+    "scc_fbn": r"fictitious|\bdba\b|business name statement",
+    "sos_llc": r"secretary of state|articles of organization|business entity|\bllc\b",
+    "cdtfa_sellers_permit": r"seller",
+    "edd_employer": r"\bedd\b|employer registration|payroll|register as .*employer",
+    "abc_type41": r"\babc\b|alcohol|beer|wine|liquor",
+    "food_manager_cert": r"food (safety|protection|handler)|manager cert",
+    "irs_ein": r"\bein\b|employer identification",
+}
+_BY_ID = {r["id"]: r for r in RULES}
+
+
+def match_rule(step: dict[str, Any]) -> Rule | None:
+    """Find the built-in rule an agency step corresponds to, if any."""
+    import re
+
+    text = f"{step.get('name', '')} {step.get('id', '')}".lower()
+    for rule_id, pattern in MATCH.items():
+        if re.search(pattern, text):
+            return _BY_ID[rule_id]
+    return None
+
+
+def is_relevant(step: dict[str, Any], profile: dict[str, Any]) -> bool:
+    """Drop steps that contradict the owner's facts (agents sometimes over-include)."""
+    rule = match_rule(step)
+    if rule is None:
+        return True
+    flags = profile_flags(profile)
+    return all(flags.get(k) == v for k, v in rule["when"].items())
+
+
+def enrich(step: dict[str, Any]) -> dict[str, Any]:
+    """Fill a missing or implausible fee/duration from the matching rule, flagged as an estimate."""
+    rule = match_rule(step)
+    if rule is None:
+        return step
+    if step.get("duration_days") is None or (step["duration_days"] <= 2 and rule["duration_days"] >= 7):
+        step["duration_days"], step["estimated"] = rule["duration_days"], True
+    if step.get("fee_usd") is None or (step["fee_usd"] == 0 and rule["fee_usd"] > 0):
+        step["fee_usd"], step["estimated"] = rule["fee_usd"], True
+    if rule.get("gates_opening") is False:
+        step["gates_opening"] = False
+    return step
+
+
+def missing_essentials(steps: list[dict[str, Any]], profile: dict[str, Any]) -> list[Rule]:
+    """Core rules for this profile that no agency step covers (e.g. the agent missed plan check)."""
+    covered = {r["id"] for r in (match_rule(s) for s in steps) if r}
+    essentials = {"sj_zoning_check", "sj_building_permit", "sj_final_inspection", "deh_plan_check",
+                  "deh_permit_to_operate", "deh_change_of_ownership", "cdtfa_sellers_permit", "abc_type41"}
+    return [r for r in fallback_steps(profile) if r["id"] in essentials and r["id"] not in covered]
