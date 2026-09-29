@@ -29,7 +29,7 @@ export default function StepPanel({ item, n, start, after, done, onToggleDone, o
           <div className="flex items-start justify-between gap-3">
             <span className="grid h-11 w-11 flex-none place-items-center rounded-xl bg-accent-soft text-accent"><StepIcon id={item.ruleId} /></span>
             <div className="mr-auto">
-              <div className="eyebrow">Step {n}{item.isCriticalPath ? " · sets your opening date" : ""}</div>
+              <div className="eyebrow">Step {n}{item.isCriticalPath ? " · key step: a delay here moves opening day" : ""}</div>
               <h2 className="text-xl font-bold">{item.plainName}</h2>
               {!work && <div className="mt-0.5 flex items-center gap-1.5 text-xs text-ink-3"><Swatch c={LEVEL_COLOR[item.level]} />{LEVEL_LABEL[item.level]} · {item.agency}</div>}
             </div>

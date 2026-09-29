@@ -1117,6 +1117,10 @@
     "label": "Apply for a sign permit",
     "url": "https://www.sanjoseca.gov/business/apply-for-sign-permit"
    }
+  ],
+  "gatesOpening": false,
+  "warnings": [
+   "You can open before the permanent sign goes up; this doesn't hold up opening day."
   ]
  },
  {
@@ -1157,7 +1161,11 @@
   },
   "sourceUrl": "https://plandev.santaclaracounty.gov/",
   "lastVerified": "",
-  "verified": false
+  "verified": false,
+  "gatesOpening": false,
+  "warnings": [
+   "You can open before the permanent sign goes up; this doesn't hold up opening day."
+  ]
  },
  {
   "id": "work_full_buildout",
@@ -2458,6 +2466,10 @@
     "label": "One-Stop Permit Center",
     "url": "https://www.sunnyvale.ca.gov/business-and-development/planning-and-building/permit-center"
    }
+  ],
+  "gatesOpening": false,
+  "warnings": [
+   "You can open before the permanent sign goes up; this doesn't hold up opening day."
   ]
  },
  {

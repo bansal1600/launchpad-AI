@@ -37,6 +37,10 @@ export default function RoadmapView({ plan, previous, diff, focusPhase, onClearF
   const doneCount = steps.filter(i => done.has(i.ruleId)).length;
   const start = plan.profile.planStartDate;
   const item = open ? byId.get(open) : undefined;
+  const target = plan.profile.targetOpenDate;
+  const keyTag: KeyTag = !target ? { text: "Key step", tone: "neutral" }
+    : plan.openDate.typical <= target ? { text: `Key step · on track for ${fmtShort(target)}`, tone: "good" }
+    : { text: `Key step · behind your ${fmtShort(target)} target`, tone: "crit" };
 
   return (
     <Section title="Your roadmap" right={
@@ -53,7 +57,7 @@ export default function RoadmapView({ plan, previous, diff, focusPhase, onClearF
           </div>
           {view === "flow" && <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-ink-2">
             {["city", "county", "state", "federal"].map(l => <span key={l} className="inline-flex items-center gap-1.5"><Swatch c={LEVEL_COLOR[l]} />{LEVEL_LABEL[l]}</span>)}
-            <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-[3px] border-2 border-ink" />Sets opening date</span>
+            <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-[3px] border-2 border-ink" />Key step: a delay here moves opening day</span>
           </div>}
         </div>
         {focusPhase !== "all" && view === "flow" && <p className="flex items-center gap-2 text-[13px]"><span className="pill bg-accent-soft text-accent">Highlighting: {PHASE_INFO[focusPhase].title}</span><button className="text-accent underline" onClick={onClearFocus}>Show all</button></p>}
@@ -77,7 +81,7 @@ export default function RoadmapView({ plan, previous, diff, focusPhase, onClearF
                 </div>
                 <div className="grid gap-2.5 [grid-template-columns:repeat(auto-fill,minmax(220px,1fr))]">
                   {w.items.map(i => (
-                    <StepCard key={i.ruleId} i={i} n={num.get(i.ruleId)!} done={done.has(i.ruleId)} fresh={fresh.has(i.ruleId)}
+                    <StepCard key={i.ruleId} i={i} n={num.get(i.ruleId)!} keyTag={keyTag} done={done.has(i.ruleId)} fresh={fresh.has(i.ruleId)}
                       dim={focusPhase !== "all" && i.phase !== focusPhase} onOpen={() => setOpen(i.ruleId)} onToggle={() => toggle(i.ruleId)}
                       waitsFor={i.dependsOn.map(d => byId.get(d)!.plainName)} />
                   ))}
@@ -100,7 +104,10 @@ export default function RoadmapView({ plan, previous, diff, focusPhase, onClearF
   );
 }
 
-function StepCard({ i, n, done, fresh, dim, onOpen, onToggle, waitsFor }: { i: PlanPermitItem; n: number; done: boolean; fresh: boolean; dim: boolean; onOpen: () => void; onToggle: () => void; waitsFor: string[] }) {
+type KeyTag = { text: string; tone: "neutral" | "good" | "crit" };
+const TONE = { neutral: "border border-ink/30 text-ink-2", good: "bg-good-soft text-good", crit: "bg-crit-soft text-crit" };
+
+function StepCard({ i, n, done, fresh, dim, onOpen, onToggle, waitsFor, keyTag }: { i: PlanPermitItem; n: number; done: boolean; fresh: boolean; dim: boolean; onOpen: () => void; onToggle: () => void; waitsFor: string[]; keyTag: KeyTag }) {
   const work = i.level === "work";
   const color = LEVEL_COLOR[i.level];
   const cost = i.fee.typical ? (i.fee.min === i.fee.max ? money(i.fee.typical) : `~${kmoney(i.fee.typical)}`) : work ? "—" : "Free";
@@ -119,7 +126,7 @@ function StepCard({ i, n, done, fresh, dim, onOpen, onToggle, waitsFor }: { i: P
           {i.requiredDocs.length > 0 && <span>{i.requiredDocs.length} docs</span>}
         </span>
         <span className="flex flex-wrap gap-1">
-          {i.isCriticalPath && <span className="tag bg-ink text-surface">Sets opening date</span>}
+          {i.isCriticalPath && !done && <span className={`tag normal-case tracking-normal ${TONE[keyTag.tone]}`} title="Any delay in this step moves your opening day">{keyTag.text}</span>}
           {fresh && <span className="tag bg-accent text-accent-ink">New</span>}
           {!i.gatesOpening && i.phase !== "after_open" && <span className="tag bg-surface-2 text-ink-3">Can finish later</span>}
         </span>

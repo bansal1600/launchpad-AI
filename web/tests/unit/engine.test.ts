@@ -187,3 +187,13 @@ describe("waves (what runs in parallel)", async () => {
     expect(waves[waves.length - 1].afterOpening).toBe(true);
   });
 });
+
+describe("sign permits", () => {
+  it("never hold up opening day", () => {
+    for (const acquisition of ["new_buildout", "second_generation", "change_of_ownership"] as const) {
+      const sign = buildPlan(applyPatch(cafe(), { acquisition, exteriorSign: true })).items.find(i => i.ruleId === "sj_sign_permit")!;
+      expect(sign.gatesOpening).toBe(false);
+      expect(sign.isCriticalPath).toBe(false);
+    }
+  });
+});
