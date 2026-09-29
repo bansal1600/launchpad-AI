@@ -28,6 +28,7 @@ web/                       Next.js app (the product)
   src/rules/               permits, costs and incentives as JSON rules (all plan facts live here)
   src/data/                directory of free help and sample local vendors
   tests/unit/              engine and chat-agent tests (vitest)
+flower-agent/              Flower AgentApp: multi-agent, human-approved permit planner (see flower-agent/README.md)
 docs/                      product overview, shared data model, feature specs F01–F20
 prototypes/                earlier Streamlit food-truck demo (TruckComply)
 ```
