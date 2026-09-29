@@ -1,0 +1,31 @@
+{
+  "profiles": [
+    {
+      "label": "Complex: meat, alcohol, staff, street + markets",
+      "city": "Springfield", "county": "Greene County", "state": "Demo State",
+      "serves": "Korean-Mexican fusion tacos and bowls",
+      "hazardous_food": true, "alcohol": true, "propane_generator": true,
+      "packaged": false, "late_night": true, "multi_jurisdiction": false,
+      "employees": "1-5", "structure": "LLC",
+      "sell_where": ["street", "markets"]
+    },
+    {
+      "label": "Simple: vegetarian, solo, markets only",
+      "city": "Springfield", "county": "Greene County", "state": "Demo State",
+      "serves": "Vegan sandwiches and cold drinks",
+      "hazardous_food": false, "alcohol": false, "propane_generator": false,
+      "packaged": false, "late_night": false, "multi_jurisdiction": false,
+      "employees": "none", "structure": "sole proprietor",
+      "sell_where": ["markets"]
+    },
+    {
+      "label": "Multi-city: catering and events across two counties",
+      "city": "Riverton", "county": "Lake County", "state": "Demo State",
+      "serves": "BBQ plates and packaged sauces",
+      "hazardous_food": true, "alcohol": false, "propane_generator": true,
+      "packaged": true, "late_night": false, "multi_jurisdiction": true,
+      "employees": "1-5", "structure": "partnership",
+      "sell_where": ["events", "catering", "private_lots"]
+    }
+  ]
+}

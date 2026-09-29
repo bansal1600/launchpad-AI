@@ -1,0 +1,2572 @@
+[
+ {
+  "id": "sj_zoning_check",
+  "phase": "before_lease",
+  "plainName": "Check the address allows your business",
+  "name": "Zoning check / Zoning Verification Letter",
+  "shortDescription": "Not every storefront is zoned for every use. Checking first keeps you from signing a lease for a space where your business isn't allowed.",
+  "whatToDo": [
+   "Enter the address at SJPermits.org to see its zoning and any past permits (free).",
+   "If the use isn't clearly allowed, or your landlord or lender wants it in writing, request a Zoning Letter through Planning online permits.",
+   "Ask a planner at the Permit Center if you're unsure."
+  ],
+  "howToApply": "Enter the address at SJPermits.org to see its zoning and any past permits (free). If the use isn't clearly allowed, or your landlord or lender wants it in writing, request a Zoning Letter through Planning online permits. Ask a planner at the Permit Center if you're unsure.",
+  "requiredDocs": [
+   "Property address or APN",
+   "Short description of your business use",
+   "Floor plan sketch (for a Zoning Letter)"
+  ],
+  "agency": "San José Planning, Building & Code Enforcement",
+  "level": "city",
+  "jurisdictions": [
+   "san_jose"
+  ],
+  "appliesWhen": true,
+  "dependsOn": [],
+  "durationDays": {
+   "min": 1,
+   "typical": 5,
+   "max": 20
+  },
+  "feeUsd": {
+   "min": 0,
+   "typical": 0,
+   "max": 800
+  },
+  "sourceUrl": "https://www.sanjoseca.gov/business/development-services-permit-center/online-permits-at-sjpermits-org/planning-online-permits",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "contact": "San José Permit Center, City Hall, 200 E. Santa Clara St., 1st floor · 408-535-3555",
+  "feeNote": "The online lookup is free. A formal Zoning Letter has a fee set in the Planning fee table.",
+  "warnings": [
+   "Do this before you sign the lease."
+  ],
+  "office": {
+   "name": "San José Permit Center",
+   "address": "City Hall, 200 E. Santa Clara St., 1st floor",
+   "hours": "Mon, Tue, Thu, Fri 8 AM–12 PM & 1–5 PM · Wed 9 AM–12 PM & 1–5 PM",
+   "phone": "408-535-3555"
+  },
+  "links": [
+   {
+    "label": "Look up zoning for an address",
+    "url": "https://www.sjpermits.org/"
+   },
+   {
+    "label": "Planning online permits (Zoning Letter)",
+    "url": "https://www.sanjoseca.gov/business/development-services-permit-center/online-permits-at-sjpermits-org/planning-online-permits"
+   }
+  ]
+ },
+ {
+  "id": "scc_zoning_clearance",
+  "phase": "before_lease",
+  "plainName": "Check the address allows your business",
+  "name": "County Zoning Clearance",
+  "shortDescription": "Outside city limits, the County decides what uses are allowed on each parcel.",
+  "whatToDo": [
+   "Contact County Planning & Development with the address and a description of your business."
+  ],
+  "howToApply": "Contact County Planning & Development with the address and a description of your business.",
+  "requiredDocs": [
+   "Property address or APN",
+   "Description of your business use"
+  ],
+  "agency": "County of Santa Clara Planning & Development",
+  "level": "county",
+  "jurisdictions": [
+   "unincorporated_scc"
+  ],
+  "appliesWhen": true,
+  "dependsOn": [],
+  "durationDays": {
+   "min": 5,
+   "typical": 15,
+   "max": 30
+  },
+  "feeUsd": {
+   "min": 0,
+   "typical": 400,
+   "max": 900
+  },
+  "sourceUrl": "https://plandev.santaclaracounty.gov/",
+  "lastVerified": "",
+  "verified": false,
+  "warnings": [
+   "Do this before you sign the lease."
+  ]
+ },
+ {
+  "id": "sj_alcohol_use_permit",
+  "phase": "before_lease",
+  "plainName": "Get City approval to sell alcohol here",
+  "name": "Alcohol use permit (Conditional or Special Use Permit)",
+  "shortDescription": "Some alcohol uses need a Planning permit and a public hearing before the City allows them. It's slow, so start early.",
+  "whatToDo": [
+   "Ask a planner whether your location and hours need a use permit for alcohol.",
+   "If yes, apply through Planning before you commit to the lease."
+  ],
+  "howToApply": "Ask a planner whether your location and hours need a use permit for alcohol. If yes, apply through Planning before you commit to the lease.",
+  "requiredDocs": [
+   "Site plan",
+   "Floor plan",
+   "Hours of operation",
+   "Security and operations plan"
+  ],
+  "agency": "San José Planning, Building & Code Enforcement",
+  "level": "city",
+  "jurisdictions": [
+   "san_jose"
+  ],
+  "appliesWhen": {
+   "or": [
+    {
+     "==": [
+      {
+       "var": "alcohol"
+      },
+      "full_bar"
+     ]
+    },
+    {
+     "and": [
+      {
+       "!=": [
+        {
+         "var": "alcohol"
+        },
+        "none"
+       ]
+      },
+      {
+       "!=": [
+        {
+         "var": "foodService"
+        },
+        "prepared_food"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "dependsOn": [
+   "sj_zoning_check",
+   "scc_zoning_clearance",
+   "sv_zoning_check"
+  ],
+  "durationDays": {
+   "min": 60,
+   "typical": 120,
+   "max": 180
+  },
+  "feeUsd": {
+   "min": 4000,
+   "typical": 7500,
+   "max": 12000
+  },
+  "sourceUrl": "https://www.sanjoseca.gov/business/development-services-permit-center/online-permits-at-sjpermits-org/planning-online-permits",
+  "lastVerified": "",
+  "verified": false,
+  "contact": "San José Permit Center, City Hall, 200 E. Santa Clara St., 1st floor · 408-535-3555",
+  "feeNote": "Estimate. Planning permit fees depend on the permit type.",
+  "warnings": [
+   "Whether you need one depends on zoning district and hours. Confirm with Planning."
+  ],
+  "office": {
+   "name": "San José Permit Center",
+   "address": "City Hall, 200 E. Santa Clara St., 1st floor",
+   "hours": "Mon, Tue, Thu, Fri 8 AM–12 PM & 1–5 PM · Wed 9 AM–12 PM & 1–5 PM",
+   "phone": "408-535-3555"
+  },
+  "links": [
+   {
+    "label": "Planning applications and appointments",
+    "url": "https://www.sanjoseca.gov/your-government/departments-offices/planning-building-code-enforcement/planning-division/start-a-new-project-or-use/applications-and-appointments"
+   }
+  ]
+ },
+ {
+  "id": "scc_use_permit_alcohol",
+  "phase": "before_lease",
+  "plainName": "Get County approval to sell alcohol here",
+  "name": "County use permit (alcohol)",
+  "shortDescription": "Some alcohol uses need a County use permit and hearing.",
+  "whatToDo": [
+   "Ask County Planning whether your use needs a permit."
+  ],
+  "howToApply": "Ask County Planning whether your use needs a permit.",
+  "requiredDocs": [
+   "Site plan",
+   "Hours of operation"
+  ],
+  "agency": "County of Santa Clara Planning & Development",
+  "level": "county",
+  "jurisdictions": [
+   "unincorporated_scc"
+  ],
+  "appliesWhen": {
+   "or": [
+    {
+     "==": [
+      {
+       "var": "alcohol"
+      },
+      "full_bar"
+     ]
+    },
+    {
+     "and": [
+      {
+       "!=": [
+        {
+         "var": "alcohol"
+        },
+        "none"
+       ]
+      },
+      {
+       "!=": [
+        {
+         "var": "foodService"
+        },
+        "prepared_food"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "dependsOn": [
+   "sj_zoning_check",
+   "scc_zoning_clearance",
+   "sv_zoning_check"
+  ],
+  "durationDays": {
+   "min": 60,
+   "typical": 120,
+   "max": 180
+  },
+  "feeUsd": {
+   "min": 4000,
+   "typical": 7500,
+   "max": 12000
+  },
+  "sourceUrl": "https://plandev.santaclaracounty.gov/",
+  "lastVerified": "",
+  "verified": false
+ },
+ {
+  "id": "sos_llc",
+  "phase": "register",
+  "plainName": "Form your LLC",
+  "name": "LLC Articles of Organization",
+  "shortDescription": "An LLC keeps the lease, loans and permits in the business's name instead of yours personally.",
+  "whatToDo": [
+   "File Articles of Organization online at bizfile ($70).",
+   "File a Statement of Information within 90 days ($20).",
+   "Budget for California's $800 annual minimum franchise tax."
+  ],
+  "howToApply": "File Articles of Organization online at bizfile ($70). File a Statement of Information within 90 days ($20). Budget for California's $800 annual minimum franchise tax.",
+  "requiredDocs": [
+   "LLC name (check availability on bizfile)",
+   "Registered agent name and address",
+   "Business mailing address",
+   "Organizer name and signature"
+  ],
+  "agency": "California Secretary of State",
+  "level": "state",
+  "jurisdictions": [
+   "ca"
+  ],
+  "appliesWhen": {
+   "==": [
+    {
+     "var": "entityType"
+    },
+    "llc"
+   ]
+  },
+  "dependsOn": [],
+  "durationDays": {
+   "min": 1,
+   "typical": 5,
+   "max": 15
+  },
+  "feeUsd": {
+   "min": 70,
+   "typical": 70,
+   "max": 70
+  },
+  "sourceUrl": "https://bizfileonline.sos.ca.gov/",
+  "lastVerified": "",
+  "verified": false,
+  "feeNote": "State filing fee; the $800 yearly franchise tax is separate.",
+  "warnings": [
+   "California charges an $800 minimum franchise tax every year the LLC exists."
+  ],
+  "links": [
+   {
+    "label": "File on bizfile Online",
+    "url": "https://bizfileonline.sos.ca.gov/"
+   }
+  ]
+ },
+ {
+  "id": "sos_corp",
+  "phase": "register",
+  "plainName": "Form your corporation",
+  "name": "Articles of Incorporation",
+  "shortDescription": "Creates your corporation so it, not you, holds the lease and permits.",
+  "whatToDo": [
+   "File Articles of Incorporation online at bizfile."
+  ],
+  "howToApply": "File Articles of Incorporation online at bizfile.",
+  "requiredDocs": [
+   "Corporation name",
+   "Registered agent",
+   "Incorporator signature"
+  ],
+  "agency": "California Secretary of State",
+  "level": "state",
+  "jurisdictions": [
+   "ca"
+  ],
+  "appliesWhen": {
+   "==": [
+    {
+     "var": "entityType"
+    },
+    "corporation"
+   ]
+  },
+  "dependsOn": [],
+  "durationDays": {
+   "min": 1,
+   "typical": 5,
+   "max": 15
+  },
+  "feeUsd": {
+   "min": 100,
+   "typical": 100,
+   "max": 100
+  },
+  "sourceUrl": "https://bizfileonline.sos.ca.gov/",
+  "lastVerified": "",
+  "verified": false,
+  "links": [
+   {
+    "label": "File on bizfile Online",
+    "url": "https://bizfileonline.sos.ca.gov/"
+   }
+  ]
+ },
+ {
+  "id": "irs_ein",
+  "phase": "register",
+  "plainName": "Get your federal tax ID (EIN)",
+  "name": "Employer Identification Number",
+  "shortDescription": "Your business's tax ID. Your bank, the state tax agency and payroll all ask for it.",
+  "whatToDo": [
+   "Apply online at IRS.gov. It's free and the number is issued at the end of the session.",
+   "Only use irs.gov; other sites charge for the same free form."
+  ],
+  "howToApply": "Apply online at IRS.gov. It's free and the number is issued at the end of the session. Only use irs.gov; other sites charge for the same free form.",
+  "requiredDocs": [
+   "Legal name of the LLC or owner",
+   "Responsible party SSN or ITIN",
+   "Business address",
+   "Formation date"
+  ],
+  "agency": "Internal Revenue Service",
+  "level": "federal",
+  "jurisdictions": [
+   "ca"
+  ],
+  "appliesWhen": true,
+  "dependsOn": [
+   "sos_llc",
+   "sos_corp"
+  ],
+  "durationDays": {
+   "min": 0,
+   "typical": 1,
+   "max": 3
+  },
+  "feeUsd": {
+   "min": 0,
+   "typical": 0,
+   "max": 0
+  },
+  "sourceUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/apply-for-an-employer-identification-number-ein-online",
+  "lastVerified": "",
+  "verified": false,
+  "links": [
+   {
+    "label": "Apply for an EIN (IRS)",
+    "url": "https://www.irs.gov/businesses/small-businesses-self-employed/apply-for-an-employer-identification-number-ein-online"
+   }
+  ]
+ },
+ {
+  "id": "sj_business_tax_certificate",
+  "phase": "register",
+  "plainName": "Register your business with the City",
+  "name": "Business Tax Certificate",
+  "shortDescription": "Every business operating in San José must register and pay the annual business tax, based on how many people work there. You, the owner, count.",
+  "whatToDo": [
+   "Register online with the City's Business Tax portal within 90 days of starting business.",
+   "Have your EIN, business address and head count (including yourself) ready.",
+   "Renew every year."
+  ],
+  "howToApply": "Register online with the City's Business Tax portal within 90 days of starting business. Have your EIN, business address and head count (including yourself) ready. Renew every year.",
+  "requiredDocs": [
+   "EIN",
+   "Business address",
+   "Number of people working, including you",
+   "Start date"
+  ],
+  "agency": "City of San José Finance Department",
+  "level": "city",
+  "jurisdictions": [
+   "san_jose"
+  ],
+  "appliesWhen": true,
+  "dependsOn": [
+   "irs_ein"
+  ],
+  "durationDays": {
+   "min": 1,
+   "typical": 3,
+   "max": 10
+  },
+  "feeUsd": {
+   "min": 227,
+   "typical": 227,
+   "max": 227
+  },
+  "sourceUrl": "https://www.sanjoseca.gov/your-government/departments-offices/finance/business-tax-registration/register-for-a-business-tax-certificate",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "feePerPerson": {
+   "base": 226.89,
+   "included": 2,
+   "perPerson": 37.98
+  },
+  "feeNote": "From July 1, 2026: $222.89 for 1–2 people, plus $37.98 per person from 3 to 35, plus a $4 state fee.",
+  "warnings": [
+   "A Business Tax Certificate does not approve your zoning, building, fire or health requirements."
+  ],
+  "office": {
+   "name": "San José Finance – Business Tax",
+   "address": "City Hall, 200 E. Santa Clara St.",
+   "hours": "Weekdays",
+   "phone": ""
+  },
+  "links": [
+   {
+    "label": "Register online",
+    "url": "https://businesstax.sanjoseca.gov/"
+   },
+   {
+    "label": "Current tax rates",
+    "url": "https://www.sanjoseca.gov/your-government/departments-offices/finance/business-tax-registration/business-tax-rates"
+   },
+   {
+    "label": "Registration instructions",
+    "url": "https://www.sanjoseca.gov/your-government/departments-offices/finance/business-tax-registration/register-for-a-business-tax-certificate"
+   }
+  ]
+ },
+ {
+  "id": "cdtfa_sellers_permit",
+  "phase": "register",
+  "plainName": "Get a seller's permit for sales tax",
+  "name": "California Seller's Permit",
+  "shortDescription": "Lets you collect and pay sales tax on what you sell, including most food and all retail goods.",
+  "whatToDo": [
+   "Register online with CDTFA. There's no fee, and it's often issued the same day.",
+   "CDTFA may ask for a security deposit based on your expected sales.",
+   "File sales tax returns on the schedule they give you."
+  ],
+  "howToApply": "Register online with CDTFA. There's no fee, and it's often issued the same day. CDTFA may ask for a security deposit based on your expected sales. File sales tax returns on the schedule they give you.",
+  "requiredDocs": [
+   "EIN",
+   "Owner SSN or LLC documents",
+   "Business address and lease",
+   "Estimated monthly sales",
+   "Bank account details"
+  ],
+  "agency": "CA Department of Tax and Fee Administration",
+  "level": "state",
+  "jurisdictions": [
+   "ca"
+  ],
+  "appliesWhen": true,
+  "dependsOn": [
+   "irs_ein"
+  ],
+  "durationDays": {
+   "min": 0,
+   "typical": 1,
+   "max": 7
+  },
+  "feeUsd": {
+   "min": 0,
+   "typical": 0,
+   "max": 0
+  },
+  "sourceUrl": "https://cdtfa.ca.gov/taxes-and-fees/faqseller.htm",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "warnings": [
+   "CDTFA may require a security deposit depending on your business and expected sales."
+  ],
+  "links": [
+   {
+    "label": "Register online with CDTFA",
+    "url": "https://onlineservices.cdtfa.ca.gov/"
+   },
+   {
+    "label": "Seller's permit FAQ",
+    "url": "https://cdtfa.ca.gov/taxes-and-fees/faqseller.htm"
+   }
+  ]
+ },
+ {
+  "id": "scc_fbn",
+  "phase": "register",
+  "plainName": "Register your business name (DBA)",
+  "name": "Fictitious Business Name Statement",
+  "shortDescription": "Needed when you trade under a name that isn't your own legal name or your LLC's exact name.",
+  "whatToDo": [
+   "File an FBN statement with the County Clerk-Recorder ($40 for one name and up to two owners).",
+   "Publish it in a local newspaper once a week for 4 weeks.",
+   "Banks usually ask for the filed FBN before opening an account in that name."
+  ],
+  "howToApply": "File an FBN statement with the County Clerk-Recorder ($40 for one name and up to two owners). Publish it in a local newspaper once a week for 4 weeks. Banks usually ask for the filed FBN before opening an account in that name.",
+  "requiredDocs": [
+   "Business name you'll trade under",
+   "Owner or LLC legal name",
+   "Business address"
+  ],
+  "agency": "Santa Clara County Clerk-Recorder",
+  "level": "county",
+  "jurisdictions": [
+   "scc"
+  ],
+  "appliesWhen": true,
+  "dependsOn": [
+   "sos_llc",
+   "sos_corp"
+  ],
+  "durationDays": {
+   "min": 1,
+   "typical": 30,
+   "max": 40
+  },
+  "feeUsd": {
+   "min": 40,
+   "typical": 40,
+   "max": 40
+  },
+  "sourceUrl": "https://clerkrecorder.santaclaracounty.gov/business-services/apply-renew-or-refile-fictitious-business-name-fbn-statement",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "gatesOpening": false,
+  "feeNote": "$40 filing fee. The newspaper publication is paid separately and prices vary.",
+  "office": {
+   "name": "County Clerk-Recorder",
+   "address": "110 W. Tasman Dr., 1st floor, San José",
+   "hours": "Weekdays 8 AM–4:30 PM",
+   "phone": ""
+  },
+  "links": [
+   {
+    "label": "File or renew an FBN",
+    "url": "https://clerkrecorder.santaclaracounty.gov/business-services/apply-renew-or-refile-fictitious-business-name-fbn-statement"
+   },
+   {
+    "label": "Clerk-Recorder fee schedule",
+    "url": "https://clerkrecorder.santaclaracounty.gov/resources/fee-schedule"
+   }
+  ]
+ },
+ {
+  "id": "edd_employer",
+  "phase": "register",
+  "plainName": "Register as an employer",
+  "name": "Employer Payroll Tax Account",
+  "shortDescription": "Once you pay more than $100 in wages in a quarter, California requires you to register for payroll taxes.",
+  "whatToDo": [
+   "Register online at EDD e-Services for Business within 15 days of first paying more than $100 in wages.",
+   "File quarterly payroll reports after that."
+  ],
+  "howToApply": "Register online at EDD e-Services for Business within 15 days of first paying more than $100 in wages. File quarterly payroll reports after that.",
+  "requiredDocs": [
+   "EIN",
+   "First payroll date",
+   "Number of employees",
+   "Owner/officer details"
+  ],
+  "agency": "CA Employment Development Department",
+  "level": "state",
+  "jurisdictions": [
+   "ca"
+  ],
+  "appliesWhen": {
+   ">": [
+    {
+     "var": "employees"
+    },
+    0
+   ]
+  },
+  "dependsOn": [
+   "irs_ein"
+  ],
+  "durationDays": {
+   "min": 0,
+   "typical": 1,
+   "max": 5
+  },
+  "feeUsd": {
+   "min": 0,
+   "typical": 0,
+   "max": 0
+  },
+  "sourceUrl": "https://edd.ca.gov/en/payroll_taxes/am_i_required_to_register_as_an_employer",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "gatesOpening": false,
+  "links": [
+   {
+    "label": "e-Services for Business",
+    "url": "https://eddservices.edd.ca.gov/"
+   },
+   {
+    "label": "Do I need to register?",
+    "url": "https://edd.ca.gov/en/payroll_taxes/am_i_required_to_register_as_an_employer"
+   }
+  ]
+ },
+ {
+  "id": "deh_plan_check",
+  "phase": "build",
+  "plainName": "Get your kitchen plans approved by the County",
+  "name": "Food Facility Plan Check",
+  "shortDescription": "The County's health department must approve your layout, finishes and equipment before you build. The City won't finalize your building permit for a food space without it.",
+  "whatToDo": [
+   "Hire a designer to draw plans: scope of work, equipment layout, finish schedule, plumbing, mechanical, electrical and hoods.",
+   "Email the plan check application, the submission checklist, your menu and equipment spec sheets to the County.",
+   "Pay the invoice. Review starts after payment and takes up to 20 business days per round.",
+   "If they ask for revisions, resubmit. Once approved, send two stamped sets to the City with your building permit."
+  ],
+  "howToApply": "Hire a designer to draw plans: scope of work, equipment layout, finish schedule, plumbing, mechanical, electrical and hoods. Email the plan check application, the submission checklist, your menu and equipment spec sheets to the County. Pay the invoice. Review starts after payment and takes up to 20 business days per round. If they ask for revisions, resubmit. Once approved, send two stamped sets to the City with your building permit.",
+  "requiredDocs": [
+   "Plan check application",
+   "Submission checklist",
+   "Plans",
+   "Menu",
+   "Equipment spec sheets"
+  ],
+  "agency": "County of Santa Clara Department of Environmental Health",
+  "level": "county",
+  "jurisdictions": [
+   "scc"
+  ],
+  "appliesWhen": {
+   "and": [
+    {
+     "==": [
+      {
+       "var": "foodService"
+      },
+      "prepared_food"
+     ]
+    },
+    {
+     "!=": [
+      {
+       "var": "acquisition"
+      },
+      "change_of_ownership"
+     ]
+    }
+   ]
+  },
+  "dependsOn": [
+   "sj_zoning_check",
+   "scc_zoning_clearance",
+   "local_placeholder",
+   "sv_zoning_check"
+  ],
+  "durationDays": {
+   "min": 28,
+   "typical": 42,
+   "max": 70
+  },
+  "feeUsd": {
+   "min": 1500,
+   "typical": 2400,
+   "max": 3500
+  },
+  "sourceUrl": "https://deh.santaclaracounty.gov/food-and-retail/compliance-retail-food-operations/submit-plan-review-restaurants-grocery-stores-and",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "contact": "County Environmental Health Plan Check, 1555 Berger Dr., Bldg 2, Suite 300, San José · 408-918-3400 (plans are submitted by email)",
+  "feeNote": "Estimate. The actual fee is invoiced by scope of work; see the County fee schedule.",
+  "warnings": [
+   "Printed plans are no longer accepted; submit by email.",
+   "Unpaid applications are discarded after 10 business days."
+  ],
+  "office": {
+   "name": "County Environmental Health – Plan Check",
+   "address": "1555 Berger Dr., Bldg 2, Suite 300, San José",
+   "hours": "Drop-in questions weekdays 7:30–10 AM; plans are submitted by email",
+   "phone": "408-918-3400"
+  },
+  "links": [
+   {
+    "label": "Plan review steps and forms",
+    "url": "https://deh.santaclaracounty.gov/food-and-retail/compliance-retail-food-operations/submit-plan-review-restaurants-grocery-stores-and"
+   },
+   {
+    "label": "2026 fee changes",
+    "url": "https://deh.santaclaracounty.gov/environmental-health-fee-adjustment-2026"
+   }
+  ]
+ },
+ {
+  "id": "deh_change_of_ownership",
+  "phase": "build",
+  "plainName": "Get the County to evaluate the food business you're buying",
+  "name": "Food facility evaluation (change of ownership)",
+  "shortDescription": "Health permits don't transfer to a new owner. The County inspects the existing space before issuing you your own permit.",
+  "whatToDo": [
+   "Request a food facility evaluation before you close the purchase.",
+   "If it finds problems, you may need repairs or a full plan review.",
+   "Then apply for your own permit to operate."
+  ],
+  "howToApply": "Request a food facility evaluation before you close the purchase. If it finds problems, you may need repairs or a full plan review. Then apply for your own permit to operate.",
+  "requiredDocs": [
+   "Purchase agreement",
+   "Existing health permit number",
+   "Current menu"
+  ],
+  "agency": "County of Santa Clara Department of Environmental Health",
+  "level": "county",
+  "jurisdictions": [
+   "scc"
+  ],
+  "appliesWhen": {
+   "and": [
+    {
+     "!=": [
+      {
+       "var": "foodService"
+      },
+      "none"
+     ]
+    },
+    {
+     "==": [
+      {
+       "var": "acquisition"
+      },
+      "change_of_ownership"
+     ]
+    }
+   ]
+  },
+  "dependsOn": [],
+  "durationDays": {
+   "min": 7,
+   "typical": 14,
+   "max": 30
+  },
+  "feeUsd": {
+   "min": 400,
+   "typical": 700,
+   "max": 900
+  },
+  "sourceUrl": "https://deh.santaclaracounty.gov/food-and-retail/compliance-retail-food-operations/restaurant-grocery-store-or-other-fixed-food",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "contact": "County Environmental Health Plan Check, 1555 Berger Dr., Bldg 2, Suite 300, San José · 408-918-3400 (plans are submitted by email)",
+  "feeNote": "Estimate; see the County fee schedule.",
+  "warnings": [
+   "Health permits do not transfer to new owners."
+  ],
+  "office": {
+   "name": "County Environmental Health – Plan Check",
+   "address": "1555 Berger Dr., Bldg 2, Suite 300, San José",
+   "hours": "Drop-in questions weekdays 7:30–10 AM; plans are submitted by email",
+   "phone": "408-918-3400"
+  },
+  "links": [
+   {
+    "label": "Operating permits and facility evaluations",
+    "url": "https://deh.santaclaracounty.gov/food-and-retail/compliance-retail-food-operations/restaurant-grocery-store-or-other-fixed-food"
+   }
+  ]
+ },
+ {
+  "id": "sj_building_permit_srp",
+  "phase": "build",
+  "plainName": "Get your building permit (fast track for food businesses)",
+  "name": "Building Permit, Streamlined Restaurant Program",
+  "shortDescription": "Any construction, plumbing, electrical or hood work needs a City permit. Food businesses under about 3,000 sq ft can use the City's free fast track: 1–2 months instead of 4–6.",
+  "whatToDo": [
+   "Have a licensed architect or engineer prepare building and trade plans. The City reviews zoning, building and fire code together.",
+   "Email the plans and your approved County health plans to the City's Small Business Allies to pre-qualify.",
+   "Attend a 1.5-hour virtual kick-off meeting with City plan reviewers; your architect must attend.",
+   "Answer review comments, pay fees and pick up your permit card."
+  ],
+  "howToApply": "Have a licensed architect or engineer prepare building and trade plans. The City reviews zoning, building and fire code together. Email the plans and your approved County health plans to the City's Small Business Allies to pre-qualify. Attend a 1.5-hour virtual kick-off meeting with City plan reviewers; your architect must attend. Answer review comments, pay fees and pick up your permit card.",
+  "requiredDocs": [
+   "Stamped building and trade plans",
+   "Approved County health plans",
+   "Equipment spec sheets",
+   "Form 308 occupancy inventory"
+  ],
+  "agency": "San José Planning, Building & Code Enforcement",
+  "level": "city",
+  "jurisdictions": [
+   "san_jose"
+  ],
+  "appliesWhen": {
+   "and": [
+    {
+     "var": "bldgNeeded"
+    },
+    {
+     "var": "srpEligible"
+    }
+   ]
+  },
+  "dependsOn": [
+   "sj_zoning_check",
+   "scc_zoning_clearance",
+   "deh_plan_check",
+   "sv_zoning_check"
+  ],
+  "durationDays": {
+   "min": 30,
+   "typical": 45,
+   "max": 60
+  },
+  "feeUsd": {
+   "min": 2500,
+   "typical": 6000,
+   "max": 12000
+  },
+  "sourceUrl": "https://www.sjeconomy.com/how-we-help/programs-and-services/streamlined-restaurant-program",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "scaleBySqft": true,
+  "contact": "San José Permit Center, City Hall, 200 E. Santa Clara St., 1st floor · 408-535-3555",
+  "feeNote": "Estimate. Building fees depend on project valuation. The fast track itself is free.",
+  "warnings": [
+   "CO2 tanks over 100 lb or cooking-oil containers of 60+ gallons need a separate Fire Department hazmat permit."
+  ],
+  "office": {
+   "name": "San José Permit Center",
+   "address": "City Hall, 200 E. Santa Clara St., 1st floor",
+   "hours": "Mon, Tue, Thu, Fri 8 AM–12 PM & 1–5 PM · Wed 9 AM–12 PM & 1–5 PM",
+   "phone": "408-535-3555"
+  },
+  "links": [
+   {
+    "label": "Streamlined Restaurant Program",
+    "url": "https://www.sjeconomy.com/how-we-help/programs-and-services/streamlined-restaurant-program"
+   },
+   {
+    "label": "Restaurant permit guide",
+    "url": "https://www.sanjoseca.gov/businesses/development-services-permit-center/start-your-project/commercial-industrial-properties/restaurants-or-food-beverage-service"
+   },
+   {
+    "label": "SJPermits (apply, pay, inspections)",
+    "url": "https://www.sjpermits.org/"
+   }
+  ]
+ },
+ {
+  "id": "sj_building_permit",
+  "phase": "build",
+  "plainName": "Get your building permit",
+  "name": "Building Permit (Tenant Improvement)",
+  "shortDescription": "Any construction, plumbing, electrical or mechanical work needs a City permit. The City reviews zoning, building and fire code in one plan review.",
+  "whatToDo": [
+   "Hire a licensed contractor or architect; the City recommends a licensed contractor apply.",
+   "Submit plans online through SJPermits and SJePlans.",
+   "Respond to reviewer comments, pay fees and get your permit card."
+  ],
+  "howToApply": "Hire a licensed contractor or architect; the City recommends a licensed contractor apply. Submit plans online through SJPermits and SJePlans. Respond to reviewer comments, pay fees and get your permit card.",
+  "requiredDocs": [
+   "Stamped building and trade plans",
+   "Building permit application",
+   "Tenant improvement plan checklist",
+   "Construction valuation form"
+  ],
+  "agency": "San José Planning, Building & Code Enforcement",
+  "level": "city",
+  "jurisdictions": [
+   "san_jose"
+  ],
+  "appliesWhen": {
+   "and": [
+    {
+     "var": "bldgNeeded"
+    },
+    {
+     "!": {
+      "var": "srpEligible"
+     }
+    }
+   ]
+  },
+  "dependsOn": [
+   "sj_zoning_check",
+   "scc_zoning_clearance",
+   "deh_plan_check",
+   "sv_zoning_check"
+  ],
+  "durationDays": {
+   "min": 60,
+   "typical": 120,
+   "max": 180
+  },
+  "feeUsd": {
+   "min": 2500,
+   "typical": 6000,
+   "max": 12000
+  },
+  "sourceUrl": "https://www.sanjoseca.gov/businesses/development-services-permit-center/start-your-project/commercial-industrial-properties/tenant-improvement",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "scaleBySqft": true,
+  "contact": "San José Permit Center, City Hall, 200 E. Santa Clara St., 1st floor · 408-535-3555",
+  "feeNote": "Estimate. Building fees depend on project valuation.",
+  "office": {
+   "name": "San José Permit Center",
+   "address": "City Hall, 200 E. Santa Clara St., 1st floor",
+   "hours": "Mon, Tue, Thu, Fri 8 AM–12 PM & 1–5 PM · Wed 9 AM–12 PM & 1–5 PM",
+   "phone": "408-535-3555"
+  },
+  "links": [
+   {
+    "label": "Tenant improvement guide",
+    "url": "https://www.sanjoseca.gov/businesses/development-services-permit-center/start-your-project/commercial-industrial-properties/tenant-improvement"
+   },
+   {
+    "label": "SJPermits (apply, pay, inspections)",
+    "url": "https://www.sjpermits.org/"
+   }
+  ]
+ },
+ {
+  "id": "scc_building_permit",
+  "phase": "build",
+  "plainName": "Get your building permit from the County",
+  "name": "County Building Permit",
+  "shortDescription": "Outside city limits, the County issues building permits.",
+  "whatToDo": [
+   "Submit plans to the County Building Inspection Office."
+  ],
+  "howToApply": "Submit plans to the County Building Inspection Office.",
+  "requiredDocs": [
+   "Stamped drawings",
+   "Title 24 energy forms"
+  ],
+  "agency": "County of Santa Clara Building Inspection",
+  "level": "county",
+  "jurisdictions": [
+   "unincorporated_scc"
+  ],
+  "appliesWhen": {
+   "var": "bldgNeeded"
+  },
+  "dependsOn": [
+   "sj_zoning_check",
+   "scc_zoning_clearance",
+   "deh_plan_check",
+   "sv_zoning_check"
+  ],
+  "durationDays": {
+   "min": 60,
+   "typical": 90,
+   "max": 150
+  },
+  "feeUsd": {
+   "min": 2500,
+   "typical": 6000,
+   "max": 12000
+  },
+  "sourceUrl": "https://plandev.santaclaracounty.gov/",
+  "lastVerified": "",
+  "verified": false,
+  "scaleBySqft": true
+ },
+ {
+  "id": "scc_fire_marshal_review",
+  "phase": "build",
+  "plainName": "Get fire approval for your hood",
+  "name": "Fire Marshal plan review",
+  "shortDescription": "Cooking hoods and suppression systems need fire review.",
+  "whatToDo": [
+   "Your hood contractor submits suppression plans to the County Fire Marshal."
+  ],
+  "howToApply": "Your hood contractor submits suppression plans to the County Fire Marshal.",
+  "requiredDocs": [
+   "Hood and fire suppression plans"
+  ],
+  "agency": "County Fire Marshal",
+  "level": "county",
+  "jurisdictions": [
+   "unincorporated_scc"
+  ],
+  "appliesWhen": {
+   "and": [
+    {
+     "var": "bldgNeeded"
+    },
+    {
+     "==": [
+      {
+       "var": "foodService"
+      },
+      "prepared_food"
+     ]
+    }
+   ]
+  },
+  "dependsOn": [
+   "sj_building_permit",
+   "sj_building_permit_srp",
+   "scc_building_permit",
+   "sv_building_permit"
+  ],
+  "durationDays": {
+   "min": 10,
+   "typical": 20,
+   "max": 45
+  },
+  "feeUsd": {
+   "min": 500,
+   "typical": 900,
+   "max": 1500
+  },
+  "sourceUrl": "https://www.sccgov.org/",
+  "lastVerified": "",
+  "verified": false
+ },
+ {
+  "id": "sj_sign_permit",
+  "phase": "build",
+  "plainName": "Get your storefront sign approved",
+  "name": "Sign Permit",
+  "shortDescription": "New exterior signs need City approval. Allowed size is generally 2.5 sq ft of sign per foot of storefront, depending on the zone.",
+  "whatToDo": [
+   "Have your sign company draw the sign with dimensions and mounting.",
+   "Submit the sign permit application on SJPermits."
+  ],
+  "howToApply": "Have your sign company draw the sign with dimensions and mounting. Submit the sign permit application on SJPermits.",
+  "requiredDocs": [
+   "Sign drawing with dimensions",
+   "Storefront elevation photo",
+   "Mounting and electrical details",
+   "Property owner approval"
+  ],
+  "agency": "San José Planning, Building & Code Enforcement",
+  "level": "city",
+  "jurisdictions": [
+   "san_jose"
+  ],
+  "appliesWhen": {
+   "var": "exteriorSign"
+  },
+  "dependsOn": [
+   "sj_zoning_check",
+   "scc_zoning_clearance",
+   "sv_zoning_check"
+  ],
+  "durationDays": {
+   "min": 10,
+   "typical": 20,
+   "max": 40
+  },
+  "feeUsd": {
+   "min": 300,
+   "typical": 600,
+   "max": 1000
+  },
+  "sourceUrl": "https://www.sanjoseca.gov/business/apply-for-sign-permit",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "contact": "San José Permit Center, City Hall, 200 E. Santa Clara St., 1st floor · 408-535-3555",
+  "feeNote": "Estimate; see the Planning fee table.",
+  "office": {
+   "name": "San José Permit Center",
+   "address": "City Hall, 200 E. Santa Clara St., 1st floor",
+   "hours": "Mon, Tue, Thu, Fri 8 AM–12 PM & 1–5 PM · Wed 9 AM–12 PM & 1–5 PM",
+   "phone": "408-535-3555"
+  },
+  "links": [
+   {
+    "label": "Apply for a sign permit",
+    "url": "https://www.sanjoseca.gov/business/apply-for-sign-permit"
+   }
+  ]
+ },
+ {
+  "id": "scc_sign_permit",
+  "phase": "build",
+  "plainName": "Get your storefront sign approved",
+  "name": "County Sign Permit",
+  "shortDescription": "New exterior signs need County approval.",
+  "whatToDo": [
+   "Submit sign drawings to County Planning."
+  ],
+  "howToApply": "Submit sign drawings to County Planning.",
+  "requiredDocs": [
+   "Sign drawing"
+  ],
+  "agency": "County of Santa Clara Planning & Development",
+  "level": "county",
+  "jurisdictions": [
+   "unincorporated_scc"
+  ],
+  "appliesWhen": {
+   "var": "exteriorSign"
+  },
+  "dependsOn": [
+   "sj_zoning_check",
+   "scc_zoning_clearance",
+   "sv_zoning_check"
+  ],
+  "durationDays": {
+   "min": 10,
+   "typical": 20,
+   "max": 40
+  },
+  "feeUsd": {
+   "min": 300,
+   "typical": 600,
+   "max": 1000
+  },
+  "sourceUrl": "https://plandev.santaclaracounty.gov/",
+  "lastVerified": "",
+  "verified": false
+ },
+ {
+  "id": "work_full_buildout",
+  "phase": "build",
+  "plainName": "Build out the space",
+  "name": "Build out the space",
+  "shortDescription": "Construction from an empty shell. Inspections can't start until this is done.",
+  "whatToDo": [
+   "Get at least three contractor bids.",
+   "Order long-lead equipment early; it often sets the pace.",
+   "For food spaces, book the County's preliminary (framing and plumbing) and pre-final (finishes) inspections as you go."
+  ],
+  "howToApply": "Get at least three contractor bids. Order long-lead equipment early; it often sets the pace. For food spaces, book the County's preliminary (framing and plumbing) and pre-final (finishes) inspections as you go.",
+  "requiredDocs": [
+   "Approved permit set",
+   "Contractor contract and license number",
+   "Equipment order list"
+  ],
+  "agency": "You and your contractor",
+  "level": "city",
+  "jurisdictions": [
+   "ca"
+  ],
+  "appliesWhen": {
+   "==": [
+    {
+     "var": "acquisition"
+    },
+    "new_buildout"
+   ]
+  },
+  "dependsOn": [
+   "sj_building_permit",
+   "sj_building_permit_srp",
+   "scc_building_permit",
+   "deh_plan_check",
+   "local_placeholder",
+   "sv_building_permit"
+  ],
+  "durationDays": {
+   "min": 60,
+   "typical": 90,
+   "max": 150
+  },
+  "feeUsd": {
+   "min": 0,
+   "typical": 0,
+   "max": 0
+  },
+  "sourceUrl": "",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "kind": "work",
+  "scaleBySqft": true
+ },
+ {
+  "id": "work_kitchen_buildout",
+  "phase": "build",
+  "plainName": "Build out the kitchen and finishes",
+  "name": "Build out the kitchen and finishes",
+  "shortDescription": "Updating a former food space. Inspections can't start until this is done.",
+  "whatToDo": [
+   "Order the hood and refrigeration early.",
+   "Book the County's preliminary (framing and plumbing) and pre-final (finishes) inspections as you go."
+  ],
+  "howToApply": "Order the hood and refrigeration early. Book the County's preliminary (framing and plumbing) and pre-final (finishes) inspections as you go.",
+  "requiredDocs": [
+   "Approved permit set",
+   "Contractor contract",
+   "Hood and refrigeration orders"
+  ],
+  "agency": "You and your contractor",
+  "level": "city",
+  "jurisdictions": [
+   "ca"
+  ],
+  "appliesWhen": {
+   "and": [
+    {
+     "==": [
+      {
+       "var": "acquisition"
+      },
+      "second_generation"
+     ]
+    },
+    {
+     "==": [
+      {
+       "var": "foodService"
+      },
+      "prepared_food"
+     ]
+    }
+   ]
+  },
+  "dependsOn": [
+   "sj_building_permit",
+   "sj_building_permit_srp",
+   "scc_building_permit",
+   "deh_plan_check",
+   "local_placeholder",
+   "sv_building_permit"
+  ],
+  "durationDays": {
+   "min": 20,
+   "typical": 35,
+   "max": 60
+  },
+  "feeUsd": {
+   "min": 0,
+   "typical": 0,
+   "max": 0
+  },
+  "sourceUrl": "",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "kind": "work",
+  "scaleBySqft": true
+ },
+ {
+  "id": "work_fitout",
+  "phase": "build",
+  "plainName": "Fit out the space",
+  "name": "Fit out the space",
+  "shortDescription": "Paint, fixtures and POS. Cosmetic work doesn't need a building permit.",
+  "whatToDo": [
+   "Anything touching walls, plumbing or electrical needs a building permit; ask the Permit Center if unsure."
+  ],
+  "howToApply": "Anything touching walls, plumbing or electrical needs a building permit; ask the Permit Center if unsure.",
+  "requiredDocs": [
+   "Fixture and furniture list",
+   "POS setup"
+  ],
+  "agency": "You and your contractor",
+  "level": "city",
+  "jurisdictions": [
+   "ca"
+  ],
+  "appliesWhen": {
+   "and": [
+    {
+     "!": {
+      "var": "bldgNeeded"
+     }
+    },
+    {
+     "!=": [
+      {
+       "var": "acquisition"
+      },
+      "change_of_ownership"
+     ]
+    }
+   ]
+  },
+  "dependsOn": [
+   "sj_zoning_check",
+   "scc_zoning_clearance",
+   "local_placeholder",
+   "sv_zoning_check"
+  ],
+  "durationDays": {
+   "min": 10,
+   "typical": 14,
+   "max": 28
+  },
+  "feeUsd": {
+   "min": 0,
+   "typical": 0,
+   "max": 0
+  },
+  "sourceUrl": "",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "kind": "work"
+ },
+ {
+  "id": "work_takeover",
+  "phase": "build",
+  "plainName": "Take over and refresh",
+  "name": "Take over and refresh",
+  "shortDescription": "Cleaning, rebranding and staff training in the existing business.",
+  "whatToDo": [
+   "Keep the existing layout and equipment to avoid triggering new permits."
+  ],
+  "howToApply": "Keep the existing layout and equipment to avoid triggering new permits.",
+  "requiredDocs": [
+   "Purchase agreement",
+   "Equipment inventory",
+   "Existing vendor contracts"
+  ],
+  "agency": "You and your contractor",
+  "level": "city",
+  "jurisdictions": [
+   "ca"
+  ],
+  "appliesWhen": {
+   "==": [
+    {
+     "var": "acquisition"
+    },
+    "change_of_ownership"
+   ]
+  },
+  "dependsOn": [
+   "sj_zoning_check",
+   "scc_zoning_clearance",
+   "local_placeholder",
+   "sv_zoning_check"
+  ],
+  "durationDays": {
+   "min": 5,
+   "typical": 10,
+   "max": 20
+  },
+  "feeUsd": {
+   "min": 0,
+   "typical": 0,
+   "max": 0
+  },
+  "sourceUrl": "",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "kind": "work"
+ },
+ {
+  "id": "sj_final_inspection",
+  "phase": "before_open",
+  "plainName": "Pass your final building inspection",
+  "name": "Final inspection & occupancy sign-off",
+  "shortDescription": "The building inspector signs off on your permit card before you can occupy the space.",
+  "whatToDo": [
+   "Schedule each inspection on your permit card at SJPermits.org or 408-535-3555.",
+   "Keep the permit card and approved plans on site."
+  ],
+  "howToApply": "Schedule each inspection on your permit card at SJPermits.org or 408-535-3555. Keep the permit card and approved plans on site.",
+  "requiredDocs": [
+   "Permit card",
+   "Approved plans on site",
+   "Equipment manuals"
+  ],
+  "agency": "San José Planning, Building & Code Enforcement",
+  "level": "city",
+  "jurisdictions": [
+   "san_jose"
+  ],
+  "appliesWhen": {
+   "var": "bldgNeeded"
+  },
+  "dependsOn": [
+   "work_full_buildout",
+   "work_kitchen_buildout",
+   "work_fitout",
+   "work_takeover",
+   "sj_building_permit",
+   "sj_building_permit_srp",
+   "scc_building_permit",
+   "sv_building_permit"
+  ],
+  "durationDays": {
+   "min": 5,
+   "typical": 10,
+   "max": 21
+  },
+  "feeUsd": {
+   "min": 0,
+   "typical": 0,
+   "max": 0
+  },
+  "sourceUrl": "https://www.sanjoseca.gov/businesses/development-services-permit-center/start-your-project/commercial-industrial-properties/restaurants-or-food-beverage-service",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "contact": "San José Permit Center, City Hall, 200 E. Santa Clara St., 1st floor · 408-535-3555",
+  "office": {
+   "name": "San José Permit Center",
+   "address": "City Hall, 200 E. Santa Clara St., 1st floor",
+   "hours": "Mon, Tue, Thu, Fri 8 AM–12 PM & 1–5 PM · Wed 9 AM–12 PM & 1–5 PM",
+   "phone": "408-535-3555"
+  },
+  "links": [
+   {
+    "label": "Schedule inspections on SJPermits",
+    "url": "https://www.sjpermits.org/"
+   }
+  ]
+ },
+ {
+  "id": "scc_final_inspection",
+  "phase": "before_open",
+  "plainName": "Pass your final building inspection",
+  "name": "County final inspection",
+  "shortDescription": "The County building inspector signs off before you open.",
+  "whatToDo": [
+   "Schedule inspections with the County."
+  ],
+  "howToApply": "Schedule inspections with the County.",
+  "requiredDocs": [
+   "Permit card",
+   "Approved plans"
+  ],
+  "agency": "County of Santa Clara Building Inspection",
+  "level": "county",
+  "jurisdictions": [
+   "unincorporated_scc"
+  ],
+  "appliesWhen": {
+   "var": "bldgNeeded"
+  },
+  "dependsOn": [
+   "work_full_buildout",
+   "work_kitchen_buildout",
+   "work_fitout",
+   "work_takeover",
+   "sj_building_permit",
+   "sj_building_permit_srp",
+   "scc_building_permit",
+   "scc_fire_marshal_review",
+   "sv_building_permit"
+  ],
+  "durationDays": {
+   "min": 5,
+   "typical": 10,
+   "max": 21
+  },
+  "feeUsd": {
+   "min": 0,
+   "typical": 0,
+   "max": 0
+  },
+  "sourceUrl": "https://plandev.santaclaracounty.gov/",
+  "lastVerified": "",
+  "verified": false
+ },
+ {
+  "id": "deh_permit_to_operate",
+  "phase": "before_open",
+  "plainName": "Get your health permit",
+  "name": "Health Permit to Operate",
+  "shortDescription": "The County permit that lets you serve food. Issued after your final health inspection, renewed yearly.",
+  "whatToDo": [
+   "Pay all plan check fees, then book the final health inspection once construction is done and equipment runs.",
+   "Submit the permit-to-operate application you receive at or before the final inspection.",
+   "Pay the permit invoice that follows."
+  ],
+  "howToApply": "Pay all plan check fees, then book the final health inspection once construction is done and equipment runs. Submit the permit-to-operate application you receive at or before the final inspection. Pay the permit invoice that follows.",
+  "requiredDocs": [
+   "Permit-to-operate application",
+   "Paid plan check invoice",
+   "Food manager certificate (or plan to get one)"
+  ],
+  "agency": "County of Santa Clara Department of Environmental Health",
+  "level": "county",
+  "jurisdictions": [
+   "scc"
+  ],
+  "appliesWhen": {
+   "!=": [
+    {
+     "var": "foodService"
+    },
+    "none"
+   ]
+  },
+  "dependsOn": [
+   "sj_final_inspection",
+   "scc_final_inspection",
+   "deh_change_of_ownership",
+   "work_full_buildout",
+   "work_kitchen_buildout",
+   "work_fitout",
+   "work_takeover",
+   "local_placeholder",
+   "sv_final_inspection"
+  ],
+  "durationDays": {
+   "min": 3,
+   "typical": 7,
+   "max": 14
+  },
+  "feeUsd": {
+   "min": 664,
+   "typical": 1100,
+   "max": 2839
+  },
+  "sourceUrl": "https://deh.santaclaracounty.gov/food-and-retail/compliance-retail-food-operations/submit-plan-review-restaurants-grocery-stores-and",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "contact": "County Environmental Health Plan Check, 1555 Berger Dr., Bldg 2, Suite 300, San José · 408-918-3400 (plans are submitted by email)",
+  "feeNote": "Annual fee depends on facility type and size; roughly $664–$2,839. Confirm on the County fee schedule.",
+  "warnings": [
+   "No food may be brought on site before the pre-final inspection unless your inspector allows it."
+  ],
+  "office": {
+   "name": "County Environmental Health – Plan Check",
+   "address": "1555 Berger Dr., Bldg 2, Suite 300, San José",
+   "hours": "Drop-in questions weekdays 7:30–10 AM; plans are submitted by email",
+   "phone": "408-918-3400"
+  },
+  "links": [
+   {
+    "label": "After your plans are approved",
+    "url": "https://deh.santaclaracounty.gov/food-and-retail/compliance-retail-food-operations/submit-plan-review-restaurants-grocery-stores-and"
+   },
+   {
+    "label": "2026 fee changes",
+    "url": "https://deh.santaclaracounty.gov/environmental-health-fee-adjustment-2026"
+   }
+  ]
+ },
+ {
+  "id": "abc_type41",
+  "phase": "register",
+  "plainName": "Apply for your beer and wine license",
+  "name": "ABC License Type 41 (On-Sale Beer & Wine, Eating Place)",
+  "shortDescription": "A state license to serve beer and wine with meals. You must run a real restaurant with a kitchen.",
+  "whatToDo": [
+   "Apply with ABC ($1,135 application fee in 2026).",
+   "Post the public notice at your space for 30 days.",
+   "Expect 90+ days; protests from neighbors add time.",
+   "The license activates after ABC inspects the finished space."
+  ],
+  "howToApply": "Apply with ABC ($1,135 application fee in 2026). Post the public notice at your space for 30 days. Expect 90+ days; protests from neighbors add time. The license activates after ABC inspects the finished space.",
+  "requiredDocs": [
+   "Lease or proof of right to occupy",
+   "Floor plan of the premises",
+   "Personal affidavits for each owner",
+   "Fingerprints (Live Scan)",
+   "Menu showing meals served"
+  ],
+  "agency": "CA Department of Alcoholic Beverage Control",
+  "level": "state",
+  "jurisdictions": [
+   "ca"
+  ],
+  "appliesWhen": {
+   "and": [
+    {
+     "==": [
+      {
+       "var": "alcohol"
+      },
+      "beer_wine"
+     ]
+    },
+    {
+     "==": [
+      {
+       "var": "foodService"
+      },
+      "prepared_food"
+     ]
+    }
+   ]
+  },
+  "dependsOn": [
+   "sj_business_tax_certificate",
+   "sos_llc",
+   "sos_corp",
+   "sj_zoning_check",
+   "scc_zoning_clearance",
+   "sv_business_license",
+   "sv_zoning_check"
+  ],
+  "durationDays": {
+   "min": 60,
+   "typical": 90,
+   "max": 180
+  },
+  "feeUsd": {
+   "min": 1135,
+   "typical": 1135,
+   "max": 1135
+  },
+  "sourceUrl": "https://www.abc.ca.gov/licensing/apply-for-a-new-license/license-application-process/",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "feeNote": "2026 application fee from ABC. An annual fee also applies.",
+  "warnings": [
+   "Once issued, the premises must open within 30 days."
+  ],
+  "links": [
+   {
+    "label": "Apply online with ABC",
+    "url": "https://www.abc.ca.gov/licensing/apply-for-a-new-license/online-license-application/"
+   },
+   {
+    "label": "How the process works",
+    "url": "https://www.abc.ca.gov/licensing/apply-for-a-new-license/license-application-process/"
+   },
+   {
+    "label": "2026 fees",
+    "url": "https://www.abc.ca.gov/licensing/license-fees/application-fee-schedules/"
+   }
+  ]
+ },
+ {
+  "id": "abc_type47",
+  "phase": "register",
+  "plainName": "Get a full liquor license",
+  "name": "ABC License Type 47 (On-Sale General, Eating Place)",
+  "shortDescription": "A state license to serve beer, wine and spirits with meals. New ones go only to priority drawing winners, so most owners buy an existing license from another business.",
+  "whatToDo": [
+   "Enter ABC's priority drawing, or find an existing Type 47 for sale in Santa Clara County (brokers list them).",
+   "File the application or transfer with ABC and post the 30-day notice.",
+   "Expect several months."
+  ],
+  "howToApply": "Enter ABC's priority drawing, or find an existing Type 47 for sale in Santa Clara County (brokers list them). File the application or transfer with ABC and post the 30-day notice. Expect several months.",
+  "requiredDocs": [
+   "Purchase agreement or drawing result",
+   "Lease",
+   "Floor plan",
+   "Fingerprints (Live Scan)",
+   "Menu"
+  ],
+  "agency": "CA Department of Alcoholic Beverage Control",
+  "level": "state",
+  "jurisdictions": [
+   "ca"
+  ],
+  "appliesWhen": {
+   "and": [
+    {
+     "==": [
+      {
+       "var": "alcohol"
+      },
+      "full_bar"
+     ]
+    },
+    {
+     "==": [
+      {
+       "var": "foodService"
+      },
+      "prepared_food"
+     ]
+    }
+   ]
+  },
+  "dependsOn": [
+   "sj_business_tax_certificate",
+   "sos_llc",
+   "sos_corp",
+   "sj_zoning_check",
+   "scc_zoning_clearance",
+   "sj_alcohol_use_permit",
+   "scc_use_permit_alcohol",
+   "sv_business_license",
+   "sv_zoning_check",
+   "sv_alcohol_use_permit"
+  ],
+  "durationDays": {
+   "min": 90,
+   "typical": 150,
+   "max": 240
+  },
+  "feeUsd": {
+   "min": 19840,
+   "typical": 95000,
+   "max": 150000
+  },
+  "sourceUrl": "https://www.abc.ca.gov/licensing/license-fees/application-fee-schedules/",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "feeNote": "$19,840 is ABC's 2026 fee for a new license won in the drawing. Buying an existing license is a private sale; the typical figure is an estimate.",
+  "warnings": [
+   "Most owners buy an existing license. The price is set by the market."
+  ],
+  "links": [
+   {
+    "label": "How the process works",
+    "url": "https://www.abc.ca.gov/licensing/apply-for-a-new-license/license-application-process/"
+   },
+   {
+    "label": "2026 fees",
+    "url": "https://www.abc.ca.gov/licensing/license-fees/application-fee-schedules/"
+   }
+  ]
+ },
+ {
+  "id": "abc_type20",
+  "phase": "register",
+  "plainName": "Apply for a beer and wine to-go license",
+  "name": "ABC License Type 20 (Off-Sale Beer & Wine)",
+  "shortDescription": "A state license to sell beer and wine to take away.",
+  "whatToDo": [
+   "Apply with ABC ($1,135 application fee in 2026) and post the 30-day notice."
+  ],
+  "howToApply": "Apply with ABC ($1,135 application fee in 2026) and post the 30-day notice.",
+  "requiredDocs": [
+   "Lease",
+   "Floor plan",
+   "Personal affidavits",
+   "Fingerprints"
+  ],
+  "agency": "CA Department of Alcoholic Beverage Control",
+  "level": "state",
+  "jurisdictions": [
+   "ca"
+  ],
+  "appliesWhen": {
+   "and": [
+    {
+     "==": [
+      {
+       "var": "alcohol"
+      },
+      "beer_wine"
+     ]
+    },
+    {
+     "!=": [
+      {
+       "var": "foodService"
+      },
+      "prepared_food"
+     ]
+    }
+   ]
+  },
+  "dependsOn": [
+   "sj_business_tax_certificate",
+   "sos_llc",
+   "sos_corp",
+   "sj_zoning_check",
+   "scc_zoning_clearance",
+   "sj_alcohol_use_permit",
+   "scc_use_permit_alcohol",
+   "sv_business_license",
+   "sv_zoning_check",
+   "sv_alcohol_use_permit"
+  ],
+  "durationDays": {
+   "min": 60,
+   "typical": 90,
+   "max": 180
+  },
+  "feeUsd": {
+   "min": 1135,
+   "typical": 1135,
+   "max": 1135
+  },
+  "sourceUrl": "https://www.abc.ca.gov/licensing/apply-for-a-new-license/license-application-process/",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "links": [
+   {
+    "label": "Apply online with ABC",
+    "url": "https://www.abc.ca.gov/licensing/apply-for-a-new-license/online-license-application/"
+   }
+  ]
+ },
+ {
+  "id": "abc_type21",
+  "phase": "register",
+  "plainName": "Get a liquor to-go license",
+  "name": "ABC License Type 21 (Off-Sale General)",
+  "shortDescription": "A state license to sell beer, wine and spirits to take away. New ones go only to priority drawing winners.",
+  "whatToDo": [
+   "Enter the priority drawing or buy an existing license, then file with ABC."
+  ],
+  "howToApply": "Enter the priority drawing or buy an existing license, then file with ABC.",
+  "requiredDocs": [
+   "Lease",
+   "Purchase agreement",
+   "Fingerprints"
+  ],
+  "agency": "CA Department of Alcoholic Beverage Control",
+  "level": "state",
+  "jurisdictions": [
+   "ca"
+  ],
+  "appliesWhen": {
+   "and": [
+    {
+     "==": [
+      {
+       "var": "alcohol"
+      },
+      "full_bar"
+     ]
+    },
+    {
+     "!=": [
+      {
+       "var": "foodService"
+      },
+      "prepared_food"
+     ]
+    }
+   ]
+  },
+  "dependsOn": [
+   "sj_business_tax_certificate",
+   "sos_llc",
+   "sos_corp",
+   "sj_zoning_check",
+   "scc_zoning_clearance",
+   "sj_alcohol_use_permit",
+   "scc_use_permit_alcohol",
+   "sv_business_license",
+   "sv_zoning_check",
+   "sv_alcohol_use_permit"
+  ],
+  "durationDays": {
+   "min": 90,
+   "typical": 150,
+   "max": 240
+  },
+  "feeUsd": {
+   "min": 19840,
+   "typical": 40000,
+   "max": 80000
+  },
+  "sourceUrl": "https://www.abc.ca.gov/licensing/license-fees/application-fee-schedules/",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "feeNote": "$19,840 for a drawing-won license; buying an existing one is a private sale (estimate).",
+  "links": [
+   {
+    "label": "2026 fees",
+    "url": "https://www.abc.ca.gov/licensing/license-fees/application-fee-schedules/"
+   }
+  ]
+ },
+ {
+  "id": "abc_issuance",
+  "phase": "before_open",
+  "plainName": "Get your alcohol license activated",
+  "name": "ABC premises inspection & license issued",
+  "shortDescription": "ABC checks the finished space before your license goes live.",
+  "whatToDo": [
+   "Call your ABC investigator as soon as your building final is done.",
+   "Open within 30 days of the license being issued."
+  ],
+  "howToApply": "Call your ABC investigator as soon as your building final is done. Open within 30 days of the license being issued.",
+  "requiredDocs": [
+   "Building final sign-off",
+   "ABC license documents"
+  ],
+  "agency": "CA Department of Alcoholic Beverage Control",
+  "level": "state",
+  "jurisdictions": [
+   "ca"
+  ],
+  "appliesWhen": {
+   "!=": [
+    {
+     "var": "alcohol"
+    },
+    "none"
+   ]
+  },
+  "dependsOn": [
+   "abc_type41",
+   "abc_type47",
+   "abc_type20",
+   "abc_type21",
+   "sj_final_inspection",
+   "scc_final_inspection",
+   "work_full_buildout",
+   "work_kitchen_buildout",
+   "work_fitout",
+   "work_takeover",
+   "sv_final_inspection"
+  ],
+  "durationDays": {
+   "min": 7,
+   "typical": 14,
+   "max": 30
+  },
+  "feeUsd": {
+   "min": 0,
+   "typical": 0,
+   "max": 0
+  },
+  "sourceUrl": "https://www.abc.ca.gov/licensing/apply-for-a-new-license/license-application-process/",
+  "lastVerified": "",
+  "verified": false,
+  "links": [
+   {
+    "label": "How the process works",
+    "url": "https://www.abc.ca.gov/licensing/apply-for-a-new-license/license-application-process/"
+   }
+  ]
+ },
+ {
+  "id": "sj_sidewalk_cafe",
+  "phase": "before_open",
+  "plainName": "Get approval for sidewalk tables",
+  "name": "Sidewalk café permit (SJ Al Fresco)",
+  "shortDescription": "Tables on the public sidewalk need City approval and a clear walking path.",
+  "whatToDo": [
+   "Call Public Works at 408-535-7802 about sidewalk seating.",
+   "Submit a seating layout and a certificate of insurance naming the City as additional insured."
+  ],
+  "howToApply": "Call Public Works at 408-535-7802 about sidewalk seating. Submit a seating layout and a certificate of insurance naming the City as additional insured.",
+  "requiredDocs": [
+   "Seating layout with walkway clearance",
+   "Certificate of insurance naming the City"
+  ],
+  "agency": "City of San José Public Works",
+  "level": "city",
+  "jurisdictions": [
+   "san_jose"
+  ],
+  "appliesWhen": {
+   "var": "outdoorSeating"
+  },
+  "dependsOn": [
+   "sj_business_tax_certificate",
+   "sv_business_license"
+  ],
+  "durationDays": {
+   "min": 14,
+   "typical": 30,
+   "max": 60
+  },
+  "feeUsd": {
+   "min": 0,
+   "typical": 300,
+   "max": 900
+  },
+  "sourceUrl": "https://www.sanjoseca.gov/your-government/departments-offices/planning-building-code-enforcement/planning-division/ordinances-proposed-updates/outdoor-dining-ordinance-update",
+  "lastVerified": "",
+  "verified": false,
+  "gatesOpening": false,
+  "office": {
+   "name": "San José Public Works",
+   "address": "City Hall, 200 E. Santa Clara St.",
+   "hours": "Weekdays",
+   "phone": "408-535-7802"
+  },
+  "links": [
+   {
+    "label": "Outdoor dining",
+    "url": "https://www.sanjoseca.gov/your-government/departments-offices/planning-building-code-enforcement/planning-division/ordinances-proposed-updates/outdoor-dining-ordinance-update"
+   }
+  ]
+ },
+ {
+  "id": "scc_encroachment_permit",
+  "phase": "before_open",
+  "plainName": "Get approval for sidewalk tables",
+  "name": "County encroachment permit",
+  "shortDescription": "Tables in the public right-of-way need a County permit.",
+  "whatToDo": [
+   "Contact County Roads & Airports."
+  ],
+  "howToApply": "Contact County Roads & Airports.",
+  "requiredDocs": [
+   "Seating layout",
+   "Certificate of insurance"
+  ],
+  "agency": "County Roads & Airports",
+  "level": "county",
+  "jurisdictions": [
+   "unincorporated_scc"
+  ],
+  "appliesWhen": {
+   "var": "outdoorSeating"
+  },
+  "dependsOn": [
+   "sj_zoning_check",
+   "scc_zoning_clearance",
+   "sv_zoning_check"
+  ],
+  "durationDays": {
+   "min": 20,
+   "typical": 30,
+   "max": 60
+  },
+  "feeUsd": {
+   "min": 250,
+   "typical": 500,
+   "max": 900
+  },
+  "sourceUrl": "https://www.sccgov.org/",
+  "lastVerified": "",
+  "verified": false,
+  "gatesOpening": false
+ },
+ {
+  "id": "food_manager_cert",
+  "phase": "after_open",
+  "plainName": "Get a certified food safety manager",
+  "name": "Food Protection Manager Certification",
+  "shortDescription": "At least one owner or employee must pass an accredited food safety exam. New food businesses have 60 days after opening.",
+  "whatToDo": [
+   "Take an accredited food safety manager course and exam.",
+   "Keep the certificate on file at the business for inspectors."
+  ],
+  "howToApply": "Take an accredited food safety manager course and exam. Keep the certificate on file at the business for inspectors.",
+  "requiredDocs": [
+   "Government photo ID",
+   "Exam registration"
+  ],
+  "agency": "ANSI-accredited exam provider (required by California law)",
+  "level": "state",
+  "jurisdictions": [
+   "ca"
+  ],
+  "appliesWhen": {
+   "==": [
+    {
+     "var": "foodService"
+    },
+    "prepared_food"
+   ]
+  },
+  "dependsOn": [],
+  "durationDays": {
+   "min": 3,
+   "typical": 7,
+   "max": 14
+  },
+  "feeUsd": {
+   "min": 100,
+   "typical": 150,
+   "max": 200
+  },
+  "sourceUrl": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=113947.1.&lawCode=HSC",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "gatesOpening": false,
+  "feeNote": "Estimate; course and exam prices vary by provider.",
+  "links": [
+   {
+    "label": "The law (Health & Safety Code 113947.1)",
+    "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=113947.1.&lawCode=HSC"
+   }
+  ]
+ },
+ {
+  "id": "sos_statement_of_information",
+  "phase": "after_open",
+  "plainName": "File your LLC's Statement of Information",
+  "name": "Statement of Information",
+  "shortDescription": "California requires new LLCs to file basic information within 90 days of forming.",
+  "whatToDo": [
+   "File online at bizfile ($20)."
+  ],
+  "howToApply": "File online at bizfile ($20).",
+  "requiredDocs": [
+   "LLC number",
+   "Manager/member names and addresses"
+  ],
+  "agency": "California Secretary of State",
+  "level": "state",
+  "jurisdictions": [
+   "ca"
+  ],
+  "appliesWhen": {
+   "==": [
+    {
+     "var": "entityType"
+    },
+    "llc"
+   ]
+  },
+  "dependsOn": [
+   "sos_llc"
+  ],
+  "durationDays": {
+   "min": 1,
+   "typical": 1,
+   "max": 5
+  },
+  "feeUsd": {
+   "min": 20,
+   "typical": 20,
+   "max": 20
+  },
+  "sourceUrl": "https://bizfileonline.sos.ca.gov/",
+  "lastVerified": "",
+  "verified": false,
+  "gatesOpening": false,
+  "links": [
+   {
+    "label": "File on bizfile Online",
+    "url": "https://bizfileonline.sos.ca.gov/"
+   }
+  ]
+ },
+ {
+  "id": "sv_zoning_check",
+  "phase": "before_lease",
+  "plainName": "Check the address allows your business",
+  "name": "Zoning verification (Sunnyvale Planning)",
+  "shortDescription": "Sunnyvale asks owners to confirm zoning before signing a lease or buying property. Planners can also tell you what construction would be allowed.",
+  "whatToDo": [
+   "Call Sunnyvale Economic Development (408-730-7607) with the address and your business type before you sign.",
+   "Ask Planning (408-730-7440) what permits your use and any construction will need."
+  ],
+  "howToApply": "Call Sunnyvale Economic Development (408-730-7607) with the address and your business type before you sign. Ask Planning (408-730-7440) what permits your use and any construction will need.",
+  "requiredDocs": [
+   "Property address",
+   "Description of your business use"
+  ],
+  "agency": "City of Sunnyvale Planning Division",
+  "level": "city",
+  "jurisdictions": [
+   "sunnyvale"
+  ],
+  "appliesWhen": true,
+  "dependsOn": [],
+  "durationDays": {
+   "min": 1,
+   "typical": 5,
+   "max": 15
+  },
+  "feeUsd": {
+   "min": 0,
+   "typical": 0,
+   "max": 0
+  },
+  "sourceUrl": "https://www.sunnyvale.ca.gov/business-and-development/economic-development/start-and-grow-your-business/verify-property-zoning",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "contact": "Sunnyvale Economic Development 408-730-7607 · Planning 408-730-7440",
+  "warnings": [
+   "Do this before you sign the lease."
+  ],
+  "office": {
+   "name": "Sunnyvale Economic Development",
+   "address": "456 W. Olive Ave.",
+   "hours": "Weekdays",
+   "phone": "408-730-7607"
+  },
+  "links": [
+   {
+    "label": "Verify property zoning",
+    "url": "https://www.sunnyvale.ca.gov/business-and-development/economic-development/start-and-grow-your-business/verify-property-zoning"
+   }
+  ]
+ },
+ {
+  "id": "sv_alcohol_use_permit",
+  "phase": "before_lease",
+  "plainName": "Get City approval to sell alcohol here",
+  "name": "Use permit for alcohol (Sunnyvale Planning)",
+  "shortDescription": "Some alcohol uses need a Planning permit before the City allows them.",
+  "whatToDo": [
+   "Ask Sunnyvale Planning whether your location and hours need a use permit for alcohol."
+  ],
+  "howToApply": "Ask Sunnyvale Planning whether your location and hours need a use permit for alcohol.",
+  "requiredDocs": [
+   "Site plan",
+   "Hours of operation"
+  ],
+  "agency": "City of Sunnyvale Planning Division",
+  "level": "city",
+  "jurisdictions": [
+   "sunnyvale"
+  ],
+  "appliesWhen": {
+   "or": [
+    {
+     "==": [
+      {
+       "var": "alcohol"
+      },
+      "full_bar"
+     ]
+    },
+    {
+     "and": [
+      {
+       "!=": [
+        {
+         "var": "alcohol"
+        },
+        "none"
+       ]
+      },
+      {
+       "!=": [
+        {
+         "var": "foodService"
+        },
+        "prepared_food"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "dependsOn": [
+   "sv_zoning_check"
+  ],
+  "durationDays": {
+   "min": 45,
+   "typical": 90,
+   "max": 150
+  },
+  "feeUsd": {
+   "min": 2000,
+   "typical": 5000,
+   "max": 9000
+  },
+  "sourceUrl": "https://www.sunnyvale.ca.gov/business-and-development/economic-development/start-and-grow-your-business/verify-property-zoning",
+  "lastVerified": "",
+  "verified": false,
+  "contact": "Sunnyvale Planning 408-730-7440",
+  "feeNote": "Estimate; see Sunnyvale's Applications, Fees and Forms page.",
+  "office": {
+   "name": "Sunnyvale One-Stop Permit Center",
+   "address": "City Hall, 456 W. Olive Ave., 2nd floor",
+   "hours": "Weekdays; closed weekends and City holidays",
+   "phone": "408-730-7444"
+  },
+  "links": [
+   {
+    "label": "Applications, fees and forms",
+    "url": "https://www.sunnyvale.ca.gov/business-and-development/planning-and-building/permit-center/applications-fees-and-forms"
+   }
+  ]
+ },
+ {
+  "id": "sv_business_license",
+  "phase": "register",
+  "plainName": "Get your Sunnyvale business license",
+  "name": "Business License Tax Certificate (Sunnyvale)",
+  "shortDescription": "Every business in Sunnyvale needs a City business license before it opens. The tax covers two years and depends on your business type and number of employees.",
+  "whatToDo": [
+   "Download the business license application with the current tax table from the City's website.",
+   "Submit it by mail or in person to Finance/Business Licensing at 456 W. Olive Ave.",
+   "Pay the tax for both years of the two-year cycle; renewals are due January 1."
+  ],
+  "howToApply": "Download the business license application with the current tax table from the City's website. Submit it by mail or in person to Finance/Business Licensing at 456 W. Olive Ave. Pay the tax for both years of the two-year cycle; renewals are due January 1.",
+  "requiredDocs": [
+   "Business license application",
+   "EIN",
+   "Business address",
+   "Number of employees"
+  ],
+  "agency": "City of Sunnyvale Department of Finance",
+  "level": "city",
+  "jurisdictions": [
+   "sunnyvale"
+  ],
+  "appliesWhen": true,
+  "dependsOn": [
+   "irs_ein",
+   "sv_zoning_check"
+  ],
+  "durationDays": {
+   "min": 3,
+   "typical": 10,
+   "max": 21
+  },
+  "feeUsd": {
+   "min": 100,
+   "typical": 250,
+   "max": 600
+  },
+  "sourceUrl": "https://www.sunnyvale.ca.gov/business-and-development/your-business-center/business-licenses",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "contact": "Sunnyvale Business Licensing, 456 W. Olive Ave. · 408-730-7620",
+  "feeNote": "Estimate. The tax depends on business type and employees; see the tax table in the application.",
+  "warnings": [
+   "If your business has a physical location, zoning and safety requirements must be met before the license is issued."
+  ],
+  "office": {
+   "name": "Sunnyvale Business Licensing",
+   "address": "456 W. Olive Ave., Sunnyvale",
+   "hours": "Weekdays",
+   "phone": "408-730-7620"
+  },
+  "links": [
+   {
+    "label": "Business license application and tax table",
+    "url": "https://www.sunnyvale.ca.gov/business-and-development/your-business-center/business-licenses"
+   }
+  ]
+ },
+ {
+  "id": "sv_building_permit",
+  "phase": "build",
+  "plainName": "Get your building permit",
+  "name": "Building permit (Sunnyvale One-Stop Permit Center)",
+  "shortDescription": "Any construction or alterations need a building permit. Building, Fire, Planning and Engineering review your plans together at the One-Stop Permit Center.",
+  "whatToDo": [
+   "Create an account on E-OneStop Online Services and apply there.",
+   "Upload plans; respond to reviewer comments online.",
+   "Simple projects can book an over-the-counter plan check appointment in the morning.",
+   "Pay fees and schedule inspections through E-OneStop."
+  ],
+  "howToApply": "Create an account on E-OneStop Online Services and apply there. Upload plans; respond to reviewer comments online. Simple projects can book an over-the-counter plan check appointment in the morning. Pay fees and schedule inspections through E-OneStop.",
+  "requiredDocs": [
+   "Plans from a licensed designer",
+   "County health plan approval (food)",
+   "Equipment spec sheets"
+  ],
+  "agency": "City of Sunnyvale Community Development",
+  "level": "city",
+  "jurisdictions": [
+   "sunnyvale"
+  ],
+  "appliesWhen": {
+   "var": "bldgNeeded"
+  },
+  "dependsOn": [
+   "sv_zoning_check",
+   "deh_plan_check"
+  ],
+  "durationDays": {
+   "min": 45,
+   "typical": 75,
+   "max": 150
+  },
+  "feeUsd": {
+   "min": 2500,
+   "typical": 6000,
+   "max": 12000
+  },
+  "sourceUrl": "https://www.sunnyvale.ca.gov/business-and-development/planning-and-building/permit-center",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "contact": "Sunnyvale One-Stop Permit Center, City Hall 2nd floor, 456 W. Olive Ave. · Building 408-730-7444",
+  "scaleBySqft": true,
+  "feeNote": "Estimate. Building fees depend on project valuation.",
+  "warnings": [
+   "Some activities need a separate Operational Fire Permit; call Fire Prevention at 408-730-7212."
+  ],
+  "office": {
+   "name": "Sunnyvale One-Stop Permit Center",
+   "address": "City Hall, 456 W. Olive Ave., 2nd floor",
+   "hours": "Weekdays; closed weekends and City holidays",
+   "phone": "408-730-7444"
+  },
+  "links": [
+   {
+    "label": "One-Stop Permit Center",
+    "url": "https://www.sunnyvale.ca.gov/business-and-development/planning-and-building/permit-center"
+   },
+   {
+    "label": "Applications, fees and forms",
+    "url": "https://www.sunnyvale.ca.gov/business-and-development/planning-and-building/permit-center/applications-fees-and-forms"
+   },
+   {
+    "label": "Operational fire permits",
+    "url": "https://www.sunnyvale.ca.gov/business-and-development/your-business-center/operational-fire-permits"
+   }
+  ]
+ },
+ {
+  "id": "sv_sign_permit",
+  "phase": "build",
+  "plainName": "Get your storefront sign approved",
+  "name": "Sign Permit (Sunnyvale)",
+  "shortDescription": "Sunnyvale requires a permit for permanent and temporary signs, including window signs and banners.",
+  "whatToDo": [
+   "Have your sign company draw the sign with size and mounting.",
+   "Apply through E-OneStop Online Services."
+  ],
+  "howToApply": "Have your sign company draw the sign with size and mounting. Apply through E-OneStop Online Services.",
+  "requiredDocs": [
+   "Sign drawing",
+   "Storefront photo"
+  ],
+  "agency": "City of Sunnyvale Planning Division",
+  "level": "city",
+  "jurisdictions": [
+   "sunnyvale"
+  ],
+  "appliesWhen": {
+   "var": "exteriorSign"
+  },
+  "dependsOn": [
+   "sv_zoning_check"
+  ],
+  "durationDays": {
+   "min": 10,
+   "typical": 20,
+   "max": 40
+  },
+  "feeUsd": {
+   "min": 200,
+   "typical": 500,
+   "max": 900
+  },
+  "sourceUrl": "https://www.sunnyvale.ca.gov/business-and-development/economic-development/start-and-grow-your-business/verify-property-zoning",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "contact": "Sunnyvale One-Stop Permit Center, City Hall 2nd floor, 456 W. Olive Ave. · Building 408-730-7444",
+  "feeNote": "Estimate; see Sunnyvale's fee schedule.",
+  "office": {
+   "name": "Sunnyvale One-Stop Permit Center",
+   "address": "City Hall, 456 W. Olive Ave., 2nd floor",
+   "hours": "Weekdays; closed weekends and City holidays",
+   "phone": "408-730-7444"
+  },
+  "links": [
+   {
+    "label": "One-Stop Permit Center",
+    "url": "https://www.sunnyvale.ca.gov/business-and-development/planning-and-building/permit-center"
+   }
+  ]
+ },
+ {
+  "id": "sv_final_inspection",
+  "phase": "before_open",
+  "plainName": "Pass your final building inspection",
+  "name": "Final inspection (Sunnyvale)",
+  "shortDescription": "City inspectors sign off on your construction before you occupy the space.",
+  "whatToDo": [
+   "Schedule inspections through E-OneStop as each trade finishes."
+  ],
+  "howToApply": "Schedule inspections through E-OneStop as each trade finishes.",
+  "requiredDocs": [
+   "Approved plans on site",
+   "Inspection record"
+  ],
+  "agency": "City of Sunnyvale Community Development",
+  "level": "city",
+  "jurisdictions": [
+   "sunnyvale"
+  ],
+  "appliesWhen": {
+   "var": "bldgNeeded"
+  },
+  "dependsOn": [
+   "work_full_buildout",
+   "work_kitchen_buildout",
+   "work_fitout",
+   "work_takeover",
+   "sv_building_permit"
+  ],
+  "durationDays": {
+   "min": 5,
+   "typical": 10,
+   "max": 21
+  },
+  "feeUsd": {
+   "min": 0,
+   "typical": 0,
+   "max": 0
+  },
+  "sourceUrl": "https://www.sunnyvale.ca.gov/business-and-development/planning-and-building/permit-center",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "contact": "Sunnyvale One-Stop Permit Center, City Hall 2nd floor, 456 W. Olive Ave. · Building 408-730-7444",
+  "office": {
+   "name": "Sunnyvale One-Stop Permit Center",
+   "address": "City Hall, 456 W. Olive Ave., 2nd floor",
+   "hours": "Weekdays; closed weekends and City holidays",
+   "phone": "408-730-7444"
+  },
+  "links": [
+   {
+    "label": "Inspections",
+    "url": "https://www.sunnyvale.ca.gov/business-and-development/planning-and-building/permit-center/inspections"
+   }
+  ]
+ },
+ {
+  "id": "sv_sidewalk_seating",
+  "phase": "before_open",
+  "plainName": "Get approval for sidewalk tables",
+  "name": "Outdoor seating approval (Sunnyvale)",
+  "shortDescription": "Tables on the public sidewalk need City approval.",
+  "whatToDo": [
+   "Ask the Permit Center what outdoor seating on your block requires."
+  ],
+  "howToApply": "Ask the Permit Center what outdoor seating on your block requires.",
+  "requiredDocs": [
+   "Seating layout",
+   "Certificate of insurance"
+  ],
+  "agency": "City of Sunnyvale",
+  "level": "city",
+  "jurisdictions": [
+   "sunnyvale"
+  ],
+  "appliesWhen": {
+   "var": "outdoorSeating"
+  },
+  "dependsOn": [
+   "sv_business_license"
+  ],
+  "durationDays": {
+   "min": 14,
+   "typical": 30,
+   "max": 60
+  },
+  "feeUsd": {
+   "min": 0,
+   "typical": 300,
+   "max": 900
+  },
+  "sourceUrl": "https://www.sunnyvale.ca.gov/business-and-development/planning-and-building/permit-center",
+  "lastVerified": "",
+  "verified": false,
+  "contact": "Sunnyvale One-Stop Permit Center, City Hall 2nd floor, 456 W. Olive Ave. · Building 408-730-7444",
+  "gatesOpening": false,
+  "office": {
+   "name": "Sunnyvale One-Stop Permit Center",
+   "address": "City Hall, 456 W. Olive Ave., 2nd floor",
+   "hours": "Weekdays; closed weekends and City holidays",
+   "phone": "408-730-7444"
+  },
+  "links": [
+   {
+    "label": "One-Stop Permit Center",
+    "url": "https://www.sunnyvale.ca.gov/business-and-development/planning-and-building/permit-center"
+   }
+  ]
+ }
+]

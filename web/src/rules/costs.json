@@ -1,0 +1,897 @@
+[
+ {
+  "id": "permit_fees",
+  "category": "permits_fees",
+  "label": "Permit and license fees",
+  "appliesWhen": true,
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "permit_fees",
+  "amount": {
+   "low": 0,
+   "typical": 0,
+   "high": 0
+  },
+  "verified": false,
+  "note": "Sum of the fees in your permit roadmap."
+ },
+ {
+  "id": "security_deposit",
+  "category": "deposits",
+  "label": "Security deposit",
+  "appliesWhen": true,
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "months_of_rent",
+  "amount": {
+   "low": 2,
+   "typical": 2,
+   "high": 3
+  },
+  "verified": false
+ },
+ {
+  "id": "utility_deposit_food",
+  "category": "deposits",
+  "label": "Utility deposits",
+  "appliesWhen": {
+   "!=": [
+    {
+     "var": "businessType"
+    },
+    "retail_boutique"
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 2000,
+   "typical": 3000,
+   "high": 5000
+  },
+  "verified": false
+ },
+ {
+  "id": "utility_deposit_retail",
+  "category": "deposits",
+  "label": "Utility deposits",
+  "appliesWhen": {
+   "==": [
+    {
+     "var": "businessType"
+    },
+    "retail_boutique"
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 800,
+   "typical": 1200,
+   "high": 2000
+  },
+  "verified": false
+ },
+ {
+  "id": "buildout_cafe_new_buildout",
+  "category": "buildout",
+  "label": "Buildout",
+  "appliesWhen": {
+   "and": [
+    {
+     "==": [
+      {
+       "var": "businessType"
+      },
+      "cafe"
+     ]
+    },
+    {
+     "==": [
+      {
+       "var": "acquisition"
+      },
+      "new_buildout"
+     ]
+    }
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "per_sqft",
+  "amount": {
+   "low": 140,
+   "typical": 175,
+   "high": 236
+  },
+  "verified": false,
+  "note": "Assumed $/sq ft for this kind of space."
+ },
+ {
+  "id": "buildout_cafe_second_generation",
+  "category": "buildout",
+  "label": "Buildout",
+  "appliesWhen": {
+   "and": [
+    {
+     "==": [
+      {
+       "var": "businessType"
+      },
+      "cafe"
+     ]
+    },
+    {
+     "==": [
+      {
+       "var": "acquisition"
+      },
+      "second_generation"
+     ]
+    }
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "per_sqft",
+  "amount": {
+   "low": 48,
+   "typical": 60,
+   "high": 81
+  },
+  "verified": false,
+  "note": "Assumed $/sq ft for this kind of space."
+ },
+ {
+  "id": "buildout_cafe_change_of_ownership",
+  "category": "buildout",
+  "label": "Buildout",
+  "appliesWhen": {
+   "and": [
+    {
+     "==": [
+      {
+       "var": "businessType"
+      },
+      "cafe"
+     ]
+    },
+    {
+     "==": [
+      {
+       "var": "acquisition"
+      },
+      "change_of_ownership"
+     ]
+    }
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "per_sqft",
+  "amount": {
+   "low": 12,
+   "typical": 15,
+   "high": 20
+  },
+  "verified": false,
+  "note": "Assumed $/sq ft for this kind of space."
+ },
+ {
+  "id": "buildout_restaurant_new_buildout",
+  "category": "buildout",
+  "label": "Buildout",
+  "appliesWhen": {
+   "and": [
+    {
+     "==": [
+      {
+       "var": "businessType"
+      },
+      "restaurant"
+     ]
+    },
+    {
+     "==": [
+      {
+       "var": "acquisition"
+      },
+      "new_buildout"
+     ]
+    }
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "per_sqft",
+  "amount": {
+   "low": 200,
+   "typical": 250,
+   "high": 338
+  },
+  "verified": false,
+  "note": "Assumed $/sq ft for this kind of space."
+ },
+ {
+  "id": "buildout_restaurant_second_generation",
+  "category": "buildout",
+  "label": "Buildout",
+  "appliesWhen": {
+   "and": [
+    {
+     "==": [
+      {
+       "var": "businessType"
+      },
+      "restaurant"
+     ]
+    },
+    {
+     "==": [
+      {
+       "var": "acquisition"
+      },
+      "second_generation"
+     ]
+    }
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "per_sqft",
+  "amount": {
+   "low": 72,
+   "typical": 90,
+   "high": 122
+  },
+  "verified": false,
+  "note": "Assumed $/sq ft for this kind of space."
+ },
+ {
+  "id": "buildout_restaurant_change_of_ownership",
+  "category": "buildout",
+  "label": "Buildout",
+  "appliesWhen": {
+   "and": [
+    {
+     "==": [
+      {
+       "var": "businessType"
+      },
+      "restaurant"
+     ]
+    },
+    {
+     "==": [
+      {
+       "var": "acquisition"
+      },
+      "change_of_ownership"
+     ]
+    }
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "per_sqft",
+  "amount": {
+   "low": 16,
+   "typical": 20,
+   "high": 27
+  },
+  "verified": false,
+  "note": "Assumed $/sq ft for this kind of space."
+ },
+ {
+  "id": "buildout_retail_boutique_new_buildout",
+  "category": "buildout",
+  "label": "Buildout",
+  "appliesWhen": {
+   "and": [
+    {
+     "==": [
+      {
+       "var": "businessType"
+      },
+      "retail_boutique"
+     ]
+    },
+    {
+     "==": [
+      {
+       "var": "acquisition"
+      },
+      "new_buildout"
+     ]
+    }
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "per_sqft",
+  "amount": {
+   "low": 56,
+   "typical": 70,
+   "high": 94
+  },
+  "verified": false,
+  "note": "Assumed $/sq ft for this kind of space."
+ },
+ {
+  "id": "buildout_retail_boutique_second_generation",
+  "category": "buildout",
+  "label": "Buildout",
+  "appliesWhen": {
+   "and": [
+    {
+     "==": [
+      {
+       "var": "businessType"
+      },
+      "retail_boutique"
+     ]
+    },
+    {
+     "==": [
+      {
+       "var": "acquisition"
+      },
+      "second_generation"
+     ]
+    }
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "per_sqft",
+  "amount": {
+   "low": 12,
+   "typical": 15,
+   "high": 20
+  },
+  "verified": false,
+  "note": "Assumed $/sq ft for this kind of space."
+ },
+ {
+  "id": "buildout_retail_boutique_change_of_ownership",
+  "category": "buildout",
+  "label": "Buildout",
+  "appliesWhen": {
+   "and": [
+    {
+     "==": [
+      {
+       "var": "businessType"
+      },
+      "retail_boutique"
+     ]
+    },
+    {
+     "==": [
+      {
+       "var": "acquisition"
+      },
+      "change_of_ownership"
+     ]
+    }
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "per_sqft",
+  "amount": {
+   "low": 6,
+   "typical": 8,
+   "high": 11
+  },
+  "verified": false,
+  "note": "Assumed $/sq ft for this kind of space."
+ },
+ {
+  "id": "sign_fabrication",
+  "category": "buildout",
+  "label": "Exterior sign fabrication",
+  "appliesWhen": {
+   "var": "exteriorSign"
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 2500,
+   "typical": 4000,
+   "high": 7000
+  },
+  "verified": false
+ },
+ {
+  "id": "equip_cafe",
+  "category": "equipment",
+  "label": "Espresso, kitchen equipment, POS",
+  "appliesWhen": {
+   "and": [
+    {
+     "==": [
+      {
+       "var": "businessType"
+      },
+      "cafe"
+     ]
+    },
+    {
+     "!=": [
+      {
+       "var": "acquisition"
+      },
+      "change_of_ownership"
+     ]
+    }
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 48000,
+   "typical": 65000,
+   "high": 90000
+  },
+  "verified": false
+ },
+ {
+  "id": "equip_restaurant",
+  "category": "equipment",
+  "label": "Kitchen equipment, POS",
+  "appliesWhen": {
+   "and": [
+    {
+     "==": [
+      {
+       "var": "businessType"
+      },
+      "restaurant"
+     ]
+    },
+    {
+     "!=": [
+      {
+       "var": "acquisition"
+      },
+      "change_of_ownership"
+     ]
+    }
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 90000,
+   "typical": 120000,
+   "high": 170000
+  },
+  "verified": false
+ },
+ {
+  "id": "equip_retail",
+  "category": "equipment",
+  "label": "Fixtures, racks, POS",
+  "appliesWhen": {
+   "and": [
+    {
+     "==": [
+      {
+       "var": "businessType"
+      },
+      "retail_boutique"
+     ]
+    },
+    {
+     "!=": [
+      {
+       "var": "acquisition"
+      },
+      "change_of_ownership"
+     ]
+    }
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 12000,
+   "typical": 18000,
+   "high": 28000
+  },
+  "verified": false
+ },
+ {
+  "id": "equip_takeover",
+  "category": "equipment",
+  "label": "Equipment upgrades after purchase",
+  "appliesWhen": {
+   "==": [
+    {
+     "var": "acquisition"
+    },
+    "change_of_ownership"
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 8000,
+   "typical": 15000,
+   "high": 30000
+  },
+  "verified": false
+ },
+ {
+  "id": "sidewalk_furniture",
+  "category": "equipment",
+  "label": "Sidewalk furniture & barriers",
+  "appliesWhen": {
+   "var": "outdoorSeating"
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 3500,
+   "typical": 6000,
+   "high": 9000
+  },
+  "verified": false
+ },
+ {
+  "id": "bar_bw",
+  "category": "equipment",
+  "label": "Beer & wine taps, cooler",
+  "appliesWhen": {
+   "==": [
+    {
+     "var": "alcohol"
+    },
+    "beer_wine"
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 5000,
+   "typical": 8000,
+   "high": 12000
+  },
+  "verified": false
+ },
+ {
+  "id": "bar_full",
+  "category": "equipment",
+  "label": "Bar build & equipment",
+  "appliesWhen": {
+   "==": [
+    {
+     "var": "alcohol"
+    },
+    "full_bar"
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 18000,
+   "typical": 25000,
+   "high": 40000
+  },
+  "verified": false
+ },
+ {
+  "id": "inv_cafe",
+  "category": "inventory",
+  "label": "Opening inventory",
+  "appliesWhen": {
+   "==": [
+    {
+     "var": "businessType"
+    },
+    "cafe"
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 5000,
+   "typical": 8000,
+   "high": 12000
+  },
+  "verified": false
+ },
+ {
+  "id": "inv_restaurant",
+  "category": "inventory",
+  "label": "Opening inventory",
+  "appliesWhen": {
+   "==": [
+    {
+     "var": "businessType"
+    },
+    "restaurant"
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 10000,
+   "typical": 15000,
+   "high": 22000
+  },
+  "verified": false
+ },
+ {
+  "id": "inv_retail",
+  "category": "inventory",
+  "label": "Opening inventory",
+  "appliesWhen": {
+   "==": [
+    {
+     "var": "businessType"
+    },
+    "retail_boutique"
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 20000,
+   "typical": 30000,
+   "high": 45000
+  },
+  "verified": false
+ },
+ {
+  "id": "inv_bw",
+  "category": "inventory",
+  "label": "Beer & wine inventory",
+  "appliesWhen": {
+   "==": [
+    {
+     "var": "alcohol"
+    },
+    "beer_wine"
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 4000,
+   "typical": 6000,
+   "high": 9000
+  },
+  "verified": false
+ },
+ {
+  "id": "inv_full",
+  "category": "inventory",
+  "label": "Opening bar inventory",
+  "appliesWhen": {
+   "==": [
+    {
+     "var": "alcohol"
+    },
+    "full_bar"
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 10000,
+   "typical": 15000,
+   "high": 22000
+  },
+  "verified": false
+ },
+ {
+  "id": "pro_new",
+  "category": "professional_services",
+  "label": "Architect / permit expediter",
+  "appliesWhen": {
+   "==": [
+    {
+     "var": "acquisition"
+    },
+    "new_buildout"
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 10000,
+   "typical": 15000,
+   "high": 24000
+  },
+  "verified": false
+ },
+ {
+  "id": "pro_second",
+  "category": "professional_services",
+  "label": "Designer / permit expediter",
+  "appliesWhen": {
+   "==": [
+    {
+     "var": "acquisition"
+    },
+    "second_generation"
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 4000,
+   "typical": 7000,
+   "high": 12000
+  },
+  "verified": false
+ },
+ {
+  "id": "pro_takeover",
+  "category": "professional_services",
+  "label": "Due diligence & escrow",
+  "appliesWhen": {
+   "==": [
+    {
+     "var": "acquisition"
+    },
+    "change_of_ownership"
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 2000,
+   "typical": 3500,
+   "high": 6000
+  },
+  "verified": false
+ },
+ {
+  "id": "pro_entity",
+  "category": "professional_services",
+  "label": "Entity setup & lease review (attorney)",
+  "appliesWhen": {
+   "in": [
+    {
+     "var": "entityType"
+    },
+    [
+     "llc",
+     "corporation"
+    ]
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 1500,
+   "typical": 2500,
+   "high": 4000
+  },
+  "verified": false
+ },
+ {
+  "id": "pro_abc",
+  "category": "professional_services",
+  "label": "Alcohol license consultant",
+  "appliesWhen": {
+   "!=": [
+    {
+     "var": "alcohol"
+    },
+    "none"
+   ]
+  },
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "fixed",
+  "amount": {
+   "low": 1500,
+   "typical": 2500,
+   "high": 4000
+  },
+  "verified": false
+ },
+ {
+  "id": "rent_until_open",
+  "category": "carrying_costs",
+  "label": "Rent until opening day",
+  "appliesWhen": true,
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "rent_until_open",
+  "amount": {
+   "low": 0,
+   "typical": 0,
+   "high": 0
+  },
+  "verified": false,
+  "note": "Rent from lease signing to opening, from your timeline."
+ },
+ {
+  "id": "cash_reserve",
+  "category": "carrying_costs",
+  "label": "Opening cash reserve (3 months' rent)",
+  "appliesWhen": true,
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "months_of_rent",
+  "amount": {
+   "low": 3,
+   "typical": 3,
+   "high": 3
+  },
+  "verified": false
+ },
+ {
+  "id": "contingency",
+  "category": "contingency",
+  "label": "Contingency (10%)",
+  "appliesWhen": true,
+  "jurisdictions": [
+   "ca"
+  ],
+  "formula": "percent_of_subtotal",
+  "amount": {
+   "low": 10,
+   "typical": 10,
+   "high": 10
+  },
+  "verified": false
+ }
+]

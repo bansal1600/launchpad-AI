@@ -1,0 +1,220 @@
+[
+ {
+  "id": "sj_vacant_storefront",
+  "name": "Vacant Storefront Grant",
+  "provider": "City of San José, Office of Economic Development & Cultural Affairs",
+  "jurisdictions": [
+   "san_jose"
+  ],
+  "eligibleWhen": {
+   "and": [
+    {
+     "var": "groundFloor"
+    },
+    {
+     ">": [
+      {
+       "var": "vacantMonths"
+      },
+      3
+     ]
+    }
+   ]
+  },
+  "likelyEligibleWhen": {
+   "and": [
+    {
+     "var": "groundFloor"
+    },
+    {
+     "==": [
+      {
+       "var": "vacantMonths"
+      },
+      null
+     ]
+    }
+   ]
+  },
+  "eligibleReason": "You're leasing a ground-floor space that's been vacant more than 3 months.",
+  "likelyReason": "Depends on how long the space has been empty; it must be more than 3 months.",
+  "missingQuestion": {
+   "field": "storefrontVacantMonths",
+   "question": "How long has the space been empty?",
+   "options": [
+    {
+     "label": "3 months or less",
+     "value": 2
+    },
+    {
+     "label": "4–12 months",
+     "value": 8
+    },
+    {
+     "label": "Over a year",
+     "value": 14
+    }
+   ]
+  },
+  "valueDescription": "Helps cover opening costs. Grant amounts vary by funding round; ask the program contact.",
+  "requirements": [
+   "Small business leasing a ground-floor space in San José",
+   "Space vacant longer than 3 months"
+  ],
+  "howToApply": "Contact the Storefront Grants program through the Office of Economic Development & Cultural Affairs.",
+  "sourceUrl": "https://www.sjeconomy.com/how-we-help/programs-and-services",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "status": "active"
+ },
+ {
+  "id": "sj_small_business_ally",
+  "name": "Free permit help from the City's Small Business Allies",
+  "provider": "City of San José",
+  "jurisdictions": [
+   "san_jose"
+  ],
+  "eligibleWhen": true,
+  "eligibleReason": "Available to any business opening in San José.",
+  "valueDescription": "City staff who help small businesses manage and speed up complex permitting, including the Streamlined Restaurant Program.",
+  "requirements": [
+   "Business located in San José"
+  ],
+  "howToApply": "Email the Small Business Allies listed on the Programs and Services page.",
+  "sourceUrl": "https://www.sjeconomy.com/how-we-help/programs-and-services",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "status": "active"
+ },
+ {
+  "id": "sbdc_advising",
+  "name": "Free advising (Small Business Development Center)",
+  "provider": "SBA-funded SBDC network",
+  "jurisdictions": [
+   "ca"
+  ],
+  "eligibleWhen": true,
+  "eligibleReason": "Open to any small business.",
+  "valueDescription": "Free consulting on financing, leases and business plans.",
+  "requirements": [
+   "Small business owner or founder"
+  ],
+  "howToApply": "Find your local SBDC and book an advisor.",
+  "sourceUrl": "https://www.sba.gov/local-assistance",
+  "lastVerified": "",
+  "verified": false,
+  "status": "active"
+ },
+ {
+  "id": "sba_microloan",
+  "name": "SBA Microloan",
+  "provider": "SBA intermediary lenders",
+  "jurisdictions": [
+   "ca"
+  ],
+  "eligibleWhen": false,
+  "likelyEligibleWhen": {
+   "var": "overBudget"
+  },
+  "eligibleReason": "",
+  "likelyReason": "Your typical estimate is over your budget. Microloans go up to $50,000.",
+  "valueDescription": "Loans up to $50,000 for working capital, equipment and inventory.",
+  "requirements": [
+   "For-profit small business",
+   "Business plan",
+   "Personal guarantee usually required"
+  ],
+  "howToApply": "Apply through an SBA microloan intermediary.",
+  "sourceUrl": "https://www.sba.gov/funding-programs/loans/microloans",
+  "lastVerified": "",
+  "verified": false,
+  "status": "active"
+ },
+ {
+  "id": "kitchen_equipment_rebates",
+  "name": "Efficient kitchen equipment rebates",
+  "provider": "Local utility programs",
+  "jurisdictions": [
+   "ca"
+  ],
+  "eligibleWhen": false,
+  "likelyEligibleWhen": {
+   "and": [
+    {
+     "==": [
+      {
+       "var": "foodService"
+      },
+      "prepared_food"
+     ]
+    },
+    {
+     "!=": [
+      {
+       "var": "acquisition"
+      },
+      "change_of_ownership"
+     ]
+    }
+   ]
+  },
+  "eligibleReason": "",
+  "likelyReason": "You're buying commercial kitchen equipment.",
+  "valueDescription": "Rebates on qualifying ENERGY STAR commercial cooking and refrigeration equipment.",
+  "requirements": [
+   "Qualifying equipment model",
+   "Utility account at the premises"
+  ],
+  "howToApply": "Check the rebate list before you order equipment.",
+  "sourceUrl": "https://sanjosecleanenergy.org/",
+  "lastVerified": "",
+  "verified": false,
+  "status": "unknown"
+ },
+ {
+  "id": "sj_existing_storefront",
+  "name": "Existing Storefront Grant",
+  "provider": "City of San José, Office of Economic Development & Cultural Affairs",
+  "jurisdictions": [
+   "san_jose"
+  ],
+  "eligibleWhen": false,
+  "likelyEligibleWhen": {
+   "and": [
+    {
+     "var": "groundFloor"
+    },
+    {
+     "==": [
+      {
+       "var": "businessType"
+      },
+      "retail_boutique"
+     ]
+    },
+    {
+     "!": {
+      ">": [
+       {
+        "var": "vacantMonths"
+       },
+       3
+      ]
+     }
+    }
+   ]
+  },
+  "eligibleReason": "",
+  "likelyReason": "Small ground-floor retail businesses can be reimbursed for signage and street-facing improvements.",
+  "valueDescription": "Reimbursement for fees and improvements to the pedestrian experience, like signage, sidewalk repair or curb cafés.",
+  "requirements": [
+   "Small retail business",
+   "Ground-floor space in San José"
+  ],
+  "howToApply": "Contact the Storefront Grants program.",
+  "sourceUrl": "https://www.sjeconomy.com/how-we-help/programs-and-services",
+  "lastVerified": "2026-09-28",
+  "verified": true,
+  "status": "active"
+ }
+]
